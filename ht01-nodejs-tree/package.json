@@ -1,0 +1,22 @@
+{
+    "name": "ht01-nodejs-tree",
+    "version": "1.0.0",
+    "description": "task for tree creation",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "github",
+        "url": "git+https://github.com/andreikoshelap/2024-11-otus-nodejs-koshelap.git#master"
+    },
+    "keywords": [
+        "tree"
+    ],
+    "author": "Andrei Koshelap",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/andreikoshelap/2024-11-otus-nodejs-koshelap/issues"
+    },
+    "homepage": "https://github.com/andreikoshelap/2024-11-otus-nodejs-koshelap/tree/master#readme"
+}

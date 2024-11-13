@@ -2,9 +2,9 @@
 
 Homework
 
->Student testing application<br>
-Purpose: to create a function for show tree-view structure.<br>
-Result: a simple application fulfill creation tree-view folders.<br>
+> Student testing application<br>
+> Purpose: to create a function for show tree-view structure.<br>
+> Result: a simple application fulfill creation tree-view folders.<br>
 
 Task Description:
 
