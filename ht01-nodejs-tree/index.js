@@ -1,18 +1,36 @@
-const fs = require('fs');
+const jsonData = {
+    name: 1,
+    items: [
+        {
+            name: 2,
+            items: [{ name: 3 }, { name: 4 }],
+        },
+        {
+            name: 5,
+            items: [{ name: 6 }],
+        },
+    ],
+};
 
-fs.readFile('example.json', 'utf8', (err, data) => {
-    if (err) {
-        console.error('Error file reading :', err);
-        return;
-    }
-    // console.log('file content:', data);
-    const array = JSON.parse(data, (key, value) => {
-        if (key === 'items' && Array.isArray(value)) {
-            return value.map(item => ({
-                ...item
-            }));
+function convertToArray(data, spacesCount) {
+    // Массив для текущего уровня
+    const result = [data.name];
+    const spaces = ' '.repeat(spacesCount);
+    console.log(spaces + data.name);
+    console.log(spaces + "|");
+    console.log(spaces + "--");
+    
+
+    // Если есть вложенные элементы, создаем подмассивы рекурсивно
+    if (data.items && Array.isArray(data.items)) {
+        const children = data.items.map((item) => {
+            convertToArray(item, spacesCount+10);
         }
-        return value;
-    });
-    console.log('file content:', array);
-});
+        );
+        result.push(children);
+    }
+
+    return result;
+}
+
+const multidimensionalArray = convertToArray(jsonData, 0);
