@@ -19,3 +19,23 @@ data example:
 "items": [{ "name": 6 }]
 }]
 }
+
+
+as result we have next view:
+1
+|
+__________
+
+          2
+          |
+          __________
+                    3
+                    |
+                    4
+                    |
+          5
+          |
+          __________
+                    6
+                    |
+it little differ from requested but I guess it generally reflect tree configuration.     
