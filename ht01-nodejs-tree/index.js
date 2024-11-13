@@ -13,16 +13,18 @@ const jsonData = {
 };
 
 function convertToArray(data, spacesCount) {
-    // Массив для текущего уровня
     const result = [data.name];
     const spaces = ' '.repeat(spacesCount);
     console.log(spaces + data.name);
     console.log(spaces + "|");
-    console.log(spaces + "--");
-    
+    if (spacesCount === 0) {
+        const underline = '_'.repeat(spacesCount+10);
+        console.log(spaces + underline);
+    }
 
-    // Если есть вложенные элементы, создаем подмассивы рекурсивно
     if (data.items && Array.isArray(data.items)) {
+        const underline = '_'.repeat(spacesCount);
+        console.log(spaces + underline);
         const children = data.items.map((item) => {
             convertToArray(item, spacesCount+10);
         }
