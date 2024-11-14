@@ -11,28 +11,34 @@ const jsonData = {
         },
     ],
 };
+const SPACE_SYMBOL = ' ';
+const STICK_SYMBOL = "|";
+const UNDRER_LINE_SYMBOL = '_';
 
 function convertToArray(data, spacesCount) {
-    const result = [data.name];
-    const spaces = ' '.repeat(spacesCount);
-    console.log(spaces + data.name);
-    console.log(spaces + "|");
-    if (spacesCount === 0) {
-        const underline = '_'.repeat(spacesCount+10);
-        console.log(spaces + underline);
-    }
-
-    if (data.items && Array.isArray(data.items)) {
-        const underline = '_'.repeat(spacesCount);
-        console.log(spaces + underline);
-        const children = data.items.map((item) => {
-            convertToArray(item, spacesCount+10);
+    const spaces = SPACE_SYMBOL.repeat(spacesCount);
+    
+    return new Promise((resolve) => {
+        resolve = [data.name];
+        console.log(spaces + data.name);
+        console.log(spaces + STICK_SYMBOL);
+        if (spacesCount === 0) {
+            console.log(spaces + UNDRER_LINE_SYMBOL.repeat(spacesCount+10));
         }
-        );
-        result.push(children);
-    }
+        if (data.items && Array.isArray(data.items)) {
+            console.log(spaces + UNDRER_LINE_SYMBOL.repeat(spacesCount));
+            const children = data.items.map((item) => {
+                Promise.all([convertToArray(item, spacesCount+10)])
+                .then([convertToArray]);
+            }
+            );
+            resolve.push(children);
+        }
+    
+        return resolve;
 
-    return result;
+    });
+
 }
 
-const multidimensionalArray = convertToArray(jsonData, 0);
+convertToArray(jsonData, 0);
