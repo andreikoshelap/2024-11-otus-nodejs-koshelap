@@ -25,8 +25,7 @@ Propesed 2 approaches - 1.index.js with synchronous fetching with recursion. 2 i
 as result we have next view:
 1
 |
-
----
+__________
 
           2
           |
