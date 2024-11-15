@@ -23,22 +23,22 @@ data example:
 Propesed 2 approaches - 1.index.js with synchronous fetching with recursion. 2 index-with-promises.js with Promises
 
 as result we have next view:
-1
-|
 
----
-
-          2
-          |
-          __________
-                    3
-                    |
-                    4
-                    |
-          5
-          |
-          __________
-                    6
-                    |
+> 1
+> |
+> __________
+> 
+>           2
+>           |
+>           __________
+>                     3
+>                     |
+>                     4
+>                     |
+>           5
+>           |
+>           __________
+>                     6
+>                     |
 
 it little differ from requested but I guess it generally reflect tree configuration.
