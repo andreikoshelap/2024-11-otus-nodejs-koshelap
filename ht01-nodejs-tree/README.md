@@ -41,4 +41,5 @@ as result we have next view:
 >                     6
 >                     |
 
+
 it little differ from requested but I guess it generally reflect tree configuration.
