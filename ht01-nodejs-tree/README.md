@@ -20,11 +20,13 @@ data example:
 }]
 }
 
+Propesed 2 approaches - 1.index.js with synchronous fetching with recursion. 2 index-with-promises.js with Promises
 
 as result we have next view:
 1
 |
-__________
+
+---
 
           2
           |
@@ -38,4 +40,5 @@ __________
           __________
                     6
                     |
-it little differ from requested but I guess it generally reflect tree configuration.     
+
+it little differ from requested but I guess it generally reflect tree configuration.
