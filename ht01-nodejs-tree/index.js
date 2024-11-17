@@ -12,25 +12,28 @@ const jsonData = {
     ],
 };
 
-const SPACE_SYMBOL = ' ';
-const STICK_SYMBOL = "|";
-const UNDRERLINE_SYMBOL = '_';
+const {
+    SPACE_SYMBOL,
+    STICK_SYMBOL,
+    UNDRERLINE_SYMBOL,
+    STEP
+} = require('./constants');
 
-function convertToArray(data, spacesCount) {
+function convertToArray(data, offset) {
     const result = [data.name];
-    const spaces = SPACE_SYMBOL.repeat(spacesCount);
+    const spaces = SPACE_SYMBOL.repeat(offset);
     console.log(spaces + data.name);
     console.log(spaces + STICK_SYMBOL);
-    if (spacesCount === 0) {
-        const underline = UNDRERLINE_SYMBOL.repeat(spacesCount+10);
+    if (offset === 0) {
+        const underline = UNDRERLINE_SYMBOL.repeat(offset+STEP);
         console.log(spaces + underline);
     }
 
     if (data.items && Array.isArray(data.items)) {
-        const underline = UNDRERLINE_SYMBOL.repeat(spacesCount);
+        const underline = UNDRERLINE_SYMBOL.repeat(offset);
         console.log(spaces + underline);
         const children = data.items.map((item) => {
-            convertToArray(item, spacesCount+10);
+            convertToArray(item, offset+STEP);
         }
         );
         result.push(children);
