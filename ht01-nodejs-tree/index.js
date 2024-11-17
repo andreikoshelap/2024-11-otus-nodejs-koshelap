@@ -13,25 +13,20 @@ const jsonData = {
 };
 
 const {
-    SPACE_SYMBOL,
+    BRACKET_SYMBOL,
     STICK_SYMBOL,
     UNDRERLINE_SYMBOL,
     STEP
 } = require('./constants');
 
 function convertToArray(data, offset) {
+    const counter = offset/STEP;
     const result = [data.name];
-    const spaces = SPACE_SYMBOL.repeat(offset);
-    console.log(spaces + data.name);
-    console.log(spaces + STICK_SYMBOL);
-    if (offset === 0) {
-        const underline = UNDRERLINE_SYMBOL.repeat(offset+STEP);
-        console.log(spaces + underline);
-    }
+    const spaces = BRACKET_SYMBOL.repeat(offset);
+    console.log(STICK_SYMBOL.repeat(counter) + spaces + data.name);
+
 
     if (data.items && Array.isArray(data.items)) {
-        const underline = UNDRERLINE_SYMBOL.repeat(offset);
-        console.log(spaces + underline);
         const children = data.items.map((item) => {
             convertToArray(item, offset+STEP);
         }
