@@ -8,7 +8,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/andreikoshelap/2024-11-otus-nodejs-koshelap.git#master"
+        "url": "git+https://github.com/andreikoshelap/2024-11-otus-nodejs-koshelap/tree/master/ht01-nodejs-tree#master"
     },
     "keywords": [
         "tree"
@@ -16,7 +16,7 @@
     "author": "Andrei Koshelap",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/andreikoshelap/2024-11-otus-nodejs-koshelap/issues"
+        "url": "https://github.com/andreikoshelap/2024-11-otus-nodejs-koshelap/tree/master/ht01-nodejs-tree/issues"
     },
-    "homepage": "https://github.com/andreikoshelap/2024-11-otus-nodejs-koshelap/tree/master#readme"
+    "homepage": "https://github.com/andreikoshelap/2024-11-otus-nodejs-koshelap/tree/master/ht01-nodejs-tree#readme"
 }
