@@ -1,21 +1,31 @@
+const fs = require('fs');
+const { Transform } = require('stream');
 
+const args = process.argv.slice(2);
 
-function convertToArray(data, offset) {
-    const counter = offset/STEP;
-    const result = [data.name];
-    const spaces = BRACKET_SYMBOL.repeat(offset);
-    console.log(STICK_SYMBOL.repeat(counter) + spaces + data.name);
-
-
-    if (data.items && Array.isArray(data.items)) {
-        const children = data.items.map((item) => {
-            convertToArray(item, offset+STEP);
-        }
-        );
-        result.push(children);
-    }
-
-    return result;
+if (args.length === 0) {
+    console.log('Please provide a file name as an argument.');
+    process.exit(1);
 }
 
-convertToArray(jsonData, 0);
+const fileName = args[0];
+
+const readStream = fs.createReadStream(__dirname + fileName, 'utf8');
+
+const chunkSeparator = new Transform({
+    transform(chunk, encoding, callback) {
+        const elements = chunk.toString().replace(/[^\w \n]/g, '').split(/\s+/);
+        const occurrencesMap = elements.reduce((map, item) => {
+            map.set(item, (map.get(item) || 0) + 1);
+            return map;
+        }, new Map());
+
+        const mapAsArray = Array.from(occurrencesMap);
+
+        callback(null, JSON.stringify(mapAsArray));
+    },
+});
+
+readStream.pipe(chunkSeparator).on('data', (data) => {
+    console.log('Transformed:', JSON.parse(data));
+});
