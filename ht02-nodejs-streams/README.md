@@ -25,4 +25,7 @@ and simply replace data.txt with data1.txt and so on.
 as a result, we got a map with strings as keys and the number of occurrences as a value.
 I have decide that output of just number of occurrences is non informative.
 
+task output :
+
+result: [ [ 'alex', 2 ], [ 'juan', 1 ], [ 'dima', 1 ] ]
 

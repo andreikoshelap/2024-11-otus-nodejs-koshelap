@@ -14,7 +14,10 @@ const readStream = fs.createReadStream(__dirname + fileName, 'utf8');
 
 const chunkSeparator = new Transform({
     transform(chunk, encoding, callback) {
-        const elements = chunk.toString().replace(/[^\w \n]/g, '').split(/\s+/);
+        const elements = chunk
+            .toString()
+            .replace(/[^\w \n]/g, '')
+            .split(/\s+/);
         const occurrencesMap = elements.reduce((map, item) => {
             map.set(item, (map.get(item) || 0) + 1);
             return map;
@@ -27,5 +30,5 @@ const chunkSeparator = new Transform({
 });
 
 readStream.pipe(chunkSeparator).on('data', (data) => {
-    console.log('Transformed:', JSON.parse(data));
+    console.log('result:', JSON.parse(data));
 });
