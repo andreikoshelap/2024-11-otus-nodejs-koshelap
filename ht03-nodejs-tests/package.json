@@ -1,0 +1,31 @@
+{
+    "name": "ht03-nodejs-tests",
+    "version": "1.0.0",
+    "description": "task for tree testing",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/andreikoshelap/2024-11-otus-nodejs-koshelap/tree/master/ht03-nodejs-tests#master"
+    },
+    "keywords": [
+        "tree"
+    ],
+    "author": "Andrei Koshelap",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/andreikoshelap/2024-11-otus-nodejs-koshelap/tree/master/ht03-nodejs-tests/issues"
+    },
+    "homepage": "https://github.com/andreikoshelap/2024-11-otus-nodejs-koshelap/tree/master/ht03-nodejs-tests#readme",
+    "devDependencies": {
+        "jest": "^27.5.1"
+    },
+    "dependencies": {
+        "node-fetch-commonjs": "^3.1.1"
+    },
+    "scripts": {
+        "test": "jest"
+    }
+}
