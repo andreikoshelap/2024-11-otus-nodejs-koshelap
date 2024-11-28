@@ -2,7 +2,7 @@
     "name": "ht03-nodejs-tests",
     "version": "1.0.0",
     "description": "task for tree testing",
-    "main": "index.js",
+    "main": "numbers/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
