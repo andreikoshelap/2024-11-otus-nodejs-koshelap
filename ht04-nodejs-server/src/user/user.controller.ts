@@ -1,10 +1,13 @@
 import { BaseController } from "../common/base.controller";
 import { NextFunction, Request, Response } from 'express';
+import { LoggerService } from "../logger/logger.service";
+import { LogMessage } from "../logger/logger";
 
-export class UserController extends BaseController{
-    
-    constructor() {
-		super();
+
+export class UserController extends BaseController<LogMessage>{
+
+    constructor(logger : LoggerService<LogMessage>) {
+		super(logger);
         this.bindRoutes([
 			{ path: '/register', method: 'post', func: this.register },
 			{ path: '/login', method: 'post', func: this.login },
