@@ -1,7 +1,5 @@
 # ht04-nodejs-server
 
-Homework
-
 ---
 
 ## Features
@@ -38,6 +36,9 @@ leave comments on the course, lessons and add comments; users can rate the cours
 contain a REST API for managing application resources
 use a database to store information about tasks, users
 
+## Application workflow diagram
+![draw.io](./images/diagram.png)
+
 ## Quick Start
 
 ### Prerequisites
@@ -45,8 +46,10 @@ use a database to store information about tasks, users
 1. **npm i -g typescript** installing/checking typescript
 2. **tsc --init** initialization typescript configuration.
 3. **npm i -D @types/express** installing/checking express for typescript.
+3. **npm i tslog** installing logger library
 
 4. Clone the repository:
+
     ```bash
     git clone https://github.com/andreikoshelap/store-rules.git
     cd store-rules
