@@ -1,23 +1,37 @@
 {
-  "name": "ht04-nodejs-server",
-  "version": "1.0.0",
-  "description": "Homework number four",
-  "main": "app.js",
-  "scripts": {
-    "start": "node ./dist/main.js",
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "Andrei Koshelap",
-  "license": "ISC",
-  "dependencies": {
-    "D": "^1.0.0",
-    "express": "^4.21.1",
-    "log4js": "^6.9.1",
-    "tslog": "^4.9.3"
-  },
-  "devDependencies": {
-    "@types/express": "^5.0.0"
-  }
+	"name": "ht04-nodejs-server",
+	"version": "1.0.0",
+	"description": "Homework number four",
+	"main": "app.js",
+	"scripts": {
+		"start": "node ./dist/main.js",
+		"dev": "nodemon",
+		"dev:inspect": "nodemon -e ts,json --exec node --inspect=localhost:9222 -r ts-node/register src/main.ts",
+		"lint": "eslint ./src/**",
+		"lint:fix": "eslint ./src/** --fix",
+		"build": "tsc",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "Andrei Koshelap",
+	"license": "ISC",
+	"dependencies": {
+		"@types/bcryptjs": "^2.4.6",
+		"bcryptjs": "^2.4.3",
+		"body-parser": "^1.20.3",
+		"express": "^4.21.1",
+		"tslog": "^4.9.3"
+	},
+	"devDependencies": {
+		"@types/express": "^5.0.0",
+		"@typescript-eslint/eslint-plugin": "^8.17.0",
+		"@typescript-eslint/parser": "^8.17.0",
+		"eslint": "^9.16.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-prettier": "^5.2.1",
+		"nodemon": "^3.1.7",
+		"prettier": "^3.4.2",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.7.2"
+	}
 }

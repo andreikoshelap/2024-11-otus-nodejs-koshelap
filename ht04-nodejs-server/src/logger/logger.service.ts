@@ -1,7 +1,6 @@
 import { Logger } from 'tslog';
 
-
-export  class LoggerService<T > {
+export class LoggerService<T> {
 	public logger: Logger<T>;
 
 	constructor() {
@@ -13,7 +12,6 @@ export  class LoggerService<T > {
 	}
 
 	error(...args: unknown[]) {
-		// отправка в sentry / rollbar
 		this.logger.error(...args);
 	}
 

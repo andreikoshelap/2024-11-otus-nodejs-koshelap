@@ -39,6 +39,9 @@ use a database to store information about tasks, users
 ## Application workflow diagram
 ![draw.io](./images/diagram.png)
 
+## Application entity diagram
+![draw.io](./images/entity_relation.drawio.png)
+
 ## Quick Start
 
 ### Prerequisites
@@ -47,73 +50,4 @@ use a database to store information about tasks, users
 2. **tsc --init** initialization typescript configuration.
 3. **npm i -D @types/express** installing/checking express for typescript.
 3. **npm i tslog** installing logger library
-
-4. Clone the repository:
-
-    ```bash
-    git clone https://github.com/andreikoshelap/store-rules.git
-    cd store-rules
-
-    ```
-
-### Running the Application
-
-```bash
-  mvn clean install
-  mvn spring-boot:run
-
-```
-
-### Open the following URLs:
-
--   Swagger API Documentation: http://localhost:8080/swagger-ui.html
--   H2 Database Console: http://localhost:8080/h2-console
--
-
-### API Endpoints
-
--   POST /api/record:
-    Validates purchase requests and adds them to the ORDER table if approved.
-    Located in OrderApiController.
--   GET /api/customer/{id}:
-    Fetches customer information (example endpoint, depending on implementation).
-    All API endpoints are documented and testable via the Swagger UI.
-
-### Database
-
--   The application uses an H2 in-memory database for development and testing.
--   Access the database through the H2 Console:
--   URL: http://localhost:8080/h2-console
--   Default credentials:
--   JDBC URL: jdbc:h2:mem:testdb
--   Username: sa
--   Password: (empty)
-    -Tables:
-
-RULE: Maps customer IDs to their purchase capacity.
-ORDER: Logs approved purchases.
-CUSTOMER: Logs customer.
-PRODUCT: Logs store.
-
-### Testing
-
--   Unit Tests:
-    The functionality of the purchase approval algorithm is tested in OrderApiControllerTest.
--   Manual Testing:
-    The API was verified using Postman for additional validation and debugging.
-
-### How it Works
-
--   When a POST request is sent to /api/record, the application:
-    Validates the customer's capacity and the requested purchase amount using rules in the RULE table.
-    If approved, logs the purchase in the ORDER table.
--   The purchase approval algorithm is located in OrderApiController.
--
-
-### Additional Tools
-
--   Swagger/OpenAPI:
-    Provides interactive API documentation.
-    Version: Springdoc OpenAPI 2.1.0.
--   H2 Console:
-    Enables developers to inspect the in-memory database.
+3. **npm i -D nodemon ts-node** installing nodemon for automatic rebuilding
