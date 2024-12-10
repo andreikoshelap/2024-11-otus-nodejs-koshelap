@@ -2,13 +2,13 @@ import { hash } from 'bcryptjs';
 
 export class User {
 	private _password: string;
-	private _teacher:boolean = false;
+	private _teacher: boolean = false;
 
 	constructor(
 		private readonly _email: string,
 		private readonly _name: string,
 		_password: string,
-		_teacher:boolean
+		_teacher: boolean,
 	) {
 		this._password = _password;
 	}
@@ -31,6 +31,4 @@ export class User {
 	get teacher(): boolean {
 		return this._teacher;
 	}
-
-
 }

@@ -4,7 +4,7 @@ import { User } from './user.entity';
 import { IUserService } from './interface/users.service.interface';
 import { ConfigService } from '../config/config.service';
 import { UserModel } from './user.model';
-import {IUser} from "./interface/user.model.interface";
+import { IUser } from './interface/user.model.interface';
 
 export class UserService implements IUserService {
 	private configService: ConfigService;

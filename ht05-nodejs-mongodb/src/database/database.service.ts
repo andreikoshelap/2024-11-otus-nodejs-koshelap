@@ -6,6 +6,7 @@ export class Database {
 		this.uri = uri;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 	async connect() {
 		try {
 			await mongoose.connect(this.uri);
@@ -23,4 +24,3 @@ export class Database {
 	// 	});
 	// }
 }
-

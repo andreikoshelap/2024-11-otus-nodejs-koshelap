@@ -5,7 +5,7 @@ import { ExeptionFilter } from './error/exeption.filter';
 import { LogMessage } from './logger/logger.interface';
 import { UserController } from './user/user.controller';
 import { json } from 'body-parser';
-import {Database} from './database/database.service';
+import { Database } from './database/database.service';
 
 export class App {
 	app: Express;
@@ -33,16 +33,17 @@ export class App {
 		this.app.use(json());
 	}
 
+	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 	useRoutes() {
 		this.app.use('/users', this.userController.router);
 	}
 
+	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 	useExceptionFilters() {
 		this.app.use(this.exceptionFilter.catch.bind(this.exceptionFilter));
 	}
 
 	public async init(): Promise<void> {
-
 		this.useMiddleware();
 		this.useRoutes();
 		this.useExceptionFilters();

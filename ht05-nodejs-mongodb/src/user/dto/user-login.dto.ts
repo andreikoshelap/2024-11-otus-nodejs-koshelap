@@ -1,9 +1,9 @@
 import { IsEmail, IsString } from 'class-validator';
 export class UserLoginDto {
-	@IsEmail({}, { message: 'Неверно указан email' })
+	@IsEmail({}, { message: 'Wrong email' })
 	email: string;
 
-	@IsString({ message: 'Не указан пароль' })
+	@IsString({ message: 'Choose password' })
 	password: string;
 
 
