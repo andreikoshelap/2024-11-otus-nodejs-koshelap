@@ -45,7 +45,6 @@ export class App {
 		this.useMiddleware();
 		this.useRoutes();
 		this.useExceptionFilters();
-		// this.server = this.app.listen(this.port);
 		this.logger.log(`Server started on http://localhost:${this.port}`);
 	}
 }

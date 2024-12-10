@@ -22,10 +22,16 @@ export class UserService implements IUserService {
 		if (existedUser) {
 			return null;
 		}
+		console.log(`email ${newUser.email} ${newUser.name} ${newUser.password}`);
 		return this.userModel.createUser(newUser);
 	}
 
-	async validateUser(dto: UserLoginDto): Promise<boolean> {
-		return true;
+	async validateUser({ email, password }: UserLoginDto): Promise<boolean> {
+		const existedUser = await this.userModel.findByEmail(email);
+		if (!existedUser) {
+			return false;
+		}
+		const newUser = new User(existedUser.email, existedUser.name, existedUser.password, false);
+		return newUser.comparePassword(password);
 	}
 }

@@ -46,10 +46,49 @@ use a database to store information about tasks, users
 
 ### Prerequisites
 
-- Install dependencies
 
 ```
 cd <project_name>
 npm install
 npm run tsc
+```
+
+## Checking how it works
+
+**Used Insomnia (https://insomnia.rest/)**
+
+```
+request : POST : localhost:8000\users\register
+data : 
+{
+"email": "evgeny@idva.ee",
+"password": "131",
+"name": "EPups",
+"teacher": false
+}
+```
+
+```
+request : POST : localhost:8000\users\login
+{
+"email": "evgeny@idva.ee",
+"password": "131",
+} 
+```
+
+**Used MongoDB Compass(mongosh)**
+
+```
+db.users.find()
+
+
+{
+  _id: ObjectId('67582bfaecf06103c78dfbb7'),
+  email: 'evgeny@idva.ee',
+  password: '$2a$10$iTjbwElOCtWjshX7BazWtOtWCQRt9sOpZ4PsnWQueHJ4th71iwYea',
+  name: 'EPups',
+  createdAt: 2024-12-10T11:54:34.110Z,
+  updatedAt: 2024-12-10T11:54:34.110Z,
+  __v: 0
+}
 ```

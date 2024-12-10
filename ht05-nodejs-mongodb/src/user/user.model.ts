@@ -9,7 +9,6 @@ const userSchema = new Schema<IUser>(
 	},
 	{
 		timestamps: true,
-		collection: 'user'
 	},
 );
 
@@ -17,7 +16,7 @@ export class UserModel {
 	private model: Model<IUser>;
 
 	constructor() {
-		this.model = mongoose.model<IUser>('user', userSchema);
+		this.model = mongoose.model<IUser>('users', userSchema);
 	}
 
 	async createUser(userData: Partial<IUser>): Promise<IUser> {
@@ -28,6 +27,7 @@ export class UserModel {
 			name: userData.name,
 			email: userData.email,
 			password: userData.password,
+			teacher: false,
 		});
 
 		return await user.save();

@@ -25,8 +25,16 @@ export class UserController extends BaseController<LogMessage> implements IUserC
 		this.userService = userService;
 	}
 
-	login(req: Request<object, object, UserLoginDto>, res: Response, next: NextFunction) : void {
-		next(new HTTPError(401, 'Authorization issue', 'login'));
+	async login(
+		req: Request<{}, {}, UserLoginDto>,
+		res: Response,
+		next: NextFunction,
+	): Promise<void> {
+		const result = await this.userService.validateUser(req.body);
+		if (!result) {
+			return next(new HTTPError(401, 'Authorization error', 'login'));
+		}
+		this.ok(res, {});
 	}
 
 	async register(
