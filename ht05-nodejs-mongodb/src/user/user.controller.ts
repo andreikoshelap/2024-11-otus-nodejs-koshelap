@@ -6,7 +6,7 @@ import { HTTPError } from '../error/http-error.class';
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { IUserController } from './interface/users.controller.interface';
-import { UserService } from './users.service';
+import { UserService } from './user.service';
 import { ValidateMiddleware } from '../common/validate.middleware';
 
 export class UserController extends BaseController<LogMessage> implements IUserController {
@@ -25,17 +25,16 @@ export class UserController extends BaseController<LogMessage> implements IUserC
 		this.userService = userService;
 	}
 
-	login(req: Request<{}, {}, UserLoginDto>, res: Response, next: NextFunction) {
+	login(req: Request<object, object, UserLoginDto>, res: Response, next: NextFunction) : void {
 		next(new HTTPError(401, 'Authorization issue', 'login'));
 	}
 
 	async register(
-		{ body }: Request<{}, {}, UserRegisterDto>,
+		{ body }: Request<object, object, UserRegisterDto>,
 		res: Response,
 		next: NextFunction,
 	): Promise<void> {
 		const result = await this.userService.createUser(body);
-		console.log(' ' + body.email);
 
 		if (!result) {
 			return next(new HTTPError(422, 'That user already exist'));

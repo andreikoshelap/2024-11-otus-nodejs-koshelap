@@ -9,19 +9,27 @@ const userSchema = new Schema<IUser>(
 	},
 	{
 		timestamps: true,
+		collection: 'user'
 	},
 );
 
-// Класс-обёртка для модели Mongoose
 export class UserModel {
 	private model: Model<IUser>;
 
 	constructor() {
-		this.model = mongoose.model<IUser>('User', userSchema);
+		this.model = mongoose.model<IUser>('user', userSchema);
 	}
 
 	async createUser(userData: Partial<IUser>): Promise<IUser> {
-		const user = new this.model(userData);
+		if (!userData.email || !userData.name || !userData.password) {
+			throw new Error('Missing required fields: email, name, or password');
+		}
+		const user = new this.model({
+			name: userData.name,
+			email: userData.email,
+			password: userData.password,
+		});
+
 		return await user.save();
 	}
 

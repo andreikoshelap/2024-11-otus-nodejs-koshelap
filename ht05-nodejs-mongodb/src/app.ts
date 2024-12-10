@@ -33,13 +33,11 @@ export class App {
 		this.app.use(json());
 	}
 
-	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-	useRoutes() {
+	useRoutes(): void {
 		this.app.use('/users', this.userController.router);
 	}
 
-	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-	useExceptionFilters() {
+	useExceptionFilters(): void {
 		this.app.use(this.exceptionFilter.catch.bind(this.exceptionFilter));
 	}
 
