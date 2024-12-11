@@ -9,7 +9,7 @@ import { UserModel } from './user/user.model';
 
 async function bootstrap(): Promise<void> {
 	const logger = new LoggerService<LogMessage>();
-	const userService = new UserService(new ConfigService(logger), new UserModel());
+	const userService = new UserService( new UserModel());
 	const app = new App(logger, new UserController(logger, userService), new ExeptionFilter(logger));
 	await app.init();
 }
