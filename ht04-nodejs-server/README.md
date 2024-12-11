@@ -46,8 +46,9 @@ use a database to store information about tasks, users
 
 ### Prerequisites
 
-1. **npm i -g typescript** installing/checking typescript
-2. **tsc --init** initialization typescript configuration.
-3. **npm i -D @types/express** installing/checking express for typescript.
-3. **npm i tslog** installing logger library
-3. **npm i -D nodemon ts-node** installing nodemon for automatic rebuilding
+
+```
+cd <project_name>
+npm install
+npm run tsc
+```
