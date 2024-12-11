@@ -17,13 +17,16 @@
 	"license": "ISC",
 	"dependencies": {
 		"@types/bcryptjs": "^2.4.6",
+		"@types/jest": "^29.5.14",
 		"bcryptjs": "^2.4.3",
 		"body-parser": "^1.20.3",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.14.1",
 		"dotenv": "^16.4.7",
 		"express": "^4.21.2",
+		"jest": "^29.7.0",
 		"mongoose": "^8.8.4",
+		"ts-jest": "^29.2.5",
 		"tslog": "^4.9.3"
 	},
 	"devDependencies": {

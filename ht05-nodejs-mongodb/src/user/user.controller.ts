@@ -20,13 +20,18 @@ export class UserController extends BaseController<LogMessage> implements IUserC
 				func: this.register,
 				middlewares: [new ValidateMiddleware(UserRegisterDto)],
 			},
-			{ path: '/login', method: 'post', func: this.login },
+			{
+				path: '/login',
+				method: 'post',
+				func: this.login,
+				middlewares: [new ValidateMiddleware(UserLoginDto)],
+			},
 		]);
 		this.userService = userService;
 	}
 
 	async login(
-		req: Request<{}, {}, UserLoginDto>,
+		req: Request<object, object, UserLoginDto>,
 		res: Response,
 		next: NextFunction,
 	): Promise<void> {

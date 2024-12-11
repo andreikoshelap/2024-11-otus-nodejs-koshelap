@@ -7,11 +7,9 @@ import { UserModel } from './user.model';
 import { IUser } from './interface/user.model.interface';
 
 export class UserService implements IUserService {
-	private configService: ConfigService;
 	private userModel: UserModel;
 
-	constructor(configService: ConfigService, userModel: UserModel) {
-		this.configService = configService;
+	constructor( userModel: UserModel) {
 		this.userModel = userModel;
 	}
 
