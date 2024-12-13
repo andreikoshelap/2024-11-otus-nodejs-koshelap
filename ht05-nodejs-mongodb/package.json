@@ -1,6 +1,6 @@
 {
-	"name": "ht04-nodejs-server",
-	"version": "1.0.0",
+	"name": "ht05-nodejs-server",
+	"version": "1.5.0",
 	"description": "Homework number four",
 	"main": "app.js",
 	"scripts": {

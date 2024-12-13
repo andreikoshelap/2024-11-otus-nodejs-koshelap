@@ -4,7 +4,6 @@ import { LogMessage } from './logger/logger.interface';
 import { LoggerService } from './logger/logger.service';
 import { UserController } from './user/user.controller';
 import { UserService } from './user/user.service';
-import { ConfigService } from './config/config.service';
 import { UserModel } from './user/user.model';
 
 async function bootstrap(): Promise<void> {
