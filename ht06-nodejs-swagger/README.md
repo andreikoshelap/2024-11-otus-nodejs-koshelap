@@ -1,4 +1,4 @@
-# ht05-nodejs-swagger
+# ht06-nodejs-swagger
 
 ---
 
@@ -93,3 +93,7 @@ db.users.find()
   __v: 0
 }
 ```
+**Check Rest API endpoints with swagger** 
+
+use http://localhost:8000/api-docs/
+
