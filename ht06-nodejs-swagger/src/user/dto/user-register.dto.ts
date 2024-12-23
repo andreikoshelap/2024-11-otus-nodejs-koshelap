@@ -1,6 +1,7 @@
 import {IsEmail, IsString} from "class-validator";
 
 export class UserRegisterDto {
+	id: string;
 	@IsEmail({}, { message: 'Wrong email' })
 	email: string;
 	@IsString({ message: 'Choose password' })
@@ -9,7 +10,8 @@ export class UserRegisterDto {
 	name: string;
 
 
-	constructor(email: string, password: string, name: string) {
+	constructor(id: string, email: string, password: string, name: string) {
+		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.name = name;
