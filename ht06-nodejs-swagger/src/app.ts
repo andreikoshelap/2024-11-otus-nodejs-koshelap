@@ -8,6 +8,7 @@ import { json } from 'body-parser';
 import { Database } from './database/database.service';
 import swaggerUI from "swagger-ui-express";
 import swaggerSpec from './annotation/swaggerConfig';
+import {CourseController} from "./course/course.controller";
 
 export class App {
 	app: Express;
@@ -15,10 +16,12 @@ export class App {
 	port: number;
 	logger: LoggerService<LogMessage>;
 	userController: UserController;
+	courseController: CourseController;
 	exceptionFilter: ExeptionFilter;
 	constructor(
 		logger: LoggerService<LogMessage>,
 		userController: UserController,
+		courseController: CourseController,
 		exeptionFilter: ExeptionFilter,
 	) {
 		const db = new Database('mongodb://localhost:27017/otus');
@@ -28,6 +31,7 @@ export class App {
 		this.logger = logger;
 		this.server = this.app.listen(this.port);
 		this.userController = userController;
+		this.courseController = courseController;
 		this.exceptionFilter = exeptionFilter;
 	}
 
@@ -42,6 +46,7 @@ export class App {
 
 	useRoutes(): void {
 		this.app.use('/users', this.userController.router);
+		this.app.use('/courses', this.courseController.router);
 	}
 
 	useExceptionFilters(): void {

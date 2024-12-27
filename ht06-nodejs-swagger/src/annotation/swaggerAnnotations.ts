@@ -83,4 +83,84 @@
  *                   example: John Doe
  *       400:
  *         description: Bad request
+ *
+ * /courses/new:
+ *   post:
+ *     summary: Create a new course
+ *     description: This endpoint creates a new course in the system.
+ *     tags:
+ *       - Courses
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Name of the course
+ *                 example: Node.js
+ *               teacher:
+ *                 type: string
+ *                 description: Name of user who organize this course
+ *                 example: John Doe
+ *     responses:
+ *       201:
+ *         description: Course created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: ID of the created course
+ *                   example: 123456
+ *                 name:
+ *                   type: string
+ *                   description: Name of the created course
+ *                   example: Node.js
+ *       400:
+ *         description: Bad request
+ *
+ * /courses/update:
+ *    post:
+ *     summary: Update of course
+ *     description: This endpoint login existing course in the system.
+ *     tags:
+ *       - Courses
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Name of the course
+ *                 example: Node.js
+ *               teacher:
+ *                 type: string
+ *                 description: Name of user who organize this course
+ *                 example: John Doe
+ *    responses:
+ *       201:
+ *         description: Course created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: ID of the created course
+ *                   example: 123456
+ *                 name:
+ *                   type: string
+ *                   description: Name of the created course
+ *                   example: Node.js
+ *       400:
+ *         description: Bad request
  */
