@@ -1,10 +1,9 @@
-import { User } from '../user/user.entity';
 
 export class Course {
 	private _name: string;
-	private _teacher: User;
+	private _teacher: string;
 
-	constructor(_teacher: User, _name: string) {
+	constructor(_teacher: string, _name: string) {
 		this._name = _name;
 		this._teacher = _teacher;
 	}
@@ -13,7 +12,7 @@ export class Course {
 		return this._name;
 	}
 
-	get teacher(): User {
+	get teacher(): string {
 		return this._teacher;
 	}
 }

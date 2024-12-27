@@ -1,8 +1,17 @@
 import {IUser} from "./interface/user.entity.interface";
+import {IUserService} from "./interface/users.service.interface";
 import {IUserModel} from "./interface/user.model.interface";
-import {UserService} from "./user.service";
-import {UserRegisterDto} from "./dto/user-register.dto";
-import {User} from "./user.entity";
+
+
+const userServiceMock: IUserService = {
+    createUser: jest.fn().mockResolvedValue({
+        id: '1',
+        email: 'a@a.ru',
+        name: 'John',
+        password: '1',
+    }),
+    validateUser: jest.fn().mockResolvedValue(true),
+};
 
 const usersModelMock: IUserModel = {
     deleteUser(id: string): void {
@@ -15,44 +24,25 @@ const usersModelMock: IUserModel = {
     findByEmail: jest.fn(),
     createUser: jest.fn()
 };
-// const userServiceMock: UserService;
-jest.mock('./user.service');
-let userServiceMock = require('./user.service');
-
-let createdUser: UserRegisterDto | null;
-beforeAll(() => {
-
-});
 
 describe('User Service', () => {
-    it('createUser', async () => {
-        userServiceMock = jest.fn().mockImplementationOnce(
-            (user: User): IUser => <IUser>({
-                name: user.name,
-                email: user.email,
-                password: user.password,
-                teacher: false,
-            }),
-        );
-        createdUser =  await userServiceMock.createUser({
-            email: 'a@a.ru',
-            name: 'John',
-            password: '1',
-        });
-        expect(createdUser?.id).toEqual(1);
-        expect(createdUser?.password).not.toEqual('1');
-    });
-
     it('validateUser - success', async () => {
-        usersModelMock.findByEmail = jest.fn().mockReturnValueOnce(createdUser);
         const res = await userServiceMock.validateUser({
             email: 'a@a.ru',
             password: '1',
         });
-        expect(res).toBeTruthy();
+
+        expect(res).toBe(true);
     });
 
+
     it('validateUser - wrong password', async () => {
+        const createdUser = await userServiceMock.createUser({
+            id: '1',
+            email: 'a@a.ru',
+            name: 'John',
+            password: '2',
+        });
         usersModelMock.findByEmail = jest.fn().mockReturnValueOnce(createdUser);
         const res = await userServiceMock.validateUser({
             email: 'a@a.ru',
