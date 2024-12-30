@@ -10,6 +10,7 @@ import { UserService } from './user.service';
 import { ValidateMiddleware } from '../common/validate.middleware';
 import {sign} from "jsonwebtoken";
 import {IConfigService} from "../config/interface/config.service.interface";
+import {GuardMiddleware} from "../common/guard.middleware";
 
 export class UserController extends BaseController<LogMessage> implements IUserController {
 	private userService: UserService;
@@ -34,7 +35,7 @@ export class UserController extends BaseController<LogMessage> implements IUserC
 				path: '/info',
 				method: 'get',
 				func: this.info,
-				middlewares: [],
+				middlewares: [new GuardMiddleware()],
 			},
 		]);
 		this.userService = userService;
@@ -68,7 +69,8 @@ export class UserController extends BaseController<LogMessage> implements IUserC
 	}
 
 	async info({ user }: Request, res: Response, next: NextFunction): Promise<void> {
-		this.ok(res, { email: user });
+		const userInfo = await this.userService.getUserInfo(user);
+		this.ok(res, { email: userInfo?.email, id: userInfo?.id });
 	}
 
 	private signJWT(email: string, secret: string): Promise<string> {
