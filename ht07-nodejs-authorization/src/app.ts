@@ -9,6 +9,8 @@ import { Database } from './database/database.service';
 import swaggerUI from "swagger-ui-express";
 import swaggerSpec from './annotation/swaggerConfig';
 import {CourseController} from "./course/course.controller";
+import {IConfigService} from "./config/interface/config.service.interface";
+import {AuthMiddleware} from "./common/auth.middleware";
 
 export class App {
 	app: Express;
@@ -18,11 +20,13 @@ export class App {
 	userController: UserController;
 	courseController: CourseController;
 	exceptionFilter: ExeptionFilter;
+	configService: IConfigService;
 	constructor(
 		logger: LoggerService<LogMessage>,
 		userController: UserController,
 		courseController: CourseController,
 		exeptionFilter: ExeptionFilter,
+		configService: IConfigService,
 	) {
 		const db = new Database('mongodb://localhost:27017/otus');
 		db.connect();
@@ -33,6 +37,7 @@ export class App {
 		this.userController = userController;
 		this.courseController = courseController;
 		this.exceptionFilter = exeptionFilter;
+		this.configService = configService;
 	}
 
 	useMiddleware(): void {
@@ -42,6 +47,8 @@ export class App {
 			swaggerUI.serve,
 			swaggerUI.setup(swaggerSpec)
 		);
+		const authMiddleware = new AuthMiddleware(this.configService.get('SECRET'));
+		this.app.use(authMiddleware.execute.bind(authMiddleware));
 	}
 
 	useRoutes(): void {

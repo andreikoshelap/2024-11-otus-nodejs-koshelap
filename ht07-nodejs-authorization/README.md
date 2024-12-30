@@ -4,8 +4,8 @@
 
 ## Features
 
--   **Student testing application number 6**
--   **Purpose**: Implement RESTful API. Developing web application on Node.js. Description and technical design REST API
+-   **Student testing application number 7**
+-   **Purpose**: Authorization and authentication. Developing web application on Node.js. Description and technical design REST API
 -   **Result**: Define endpoints API, codes of response
 
 -   **Modern Backend Stack**:
@@ -75,8 +75,16 @@ request : POST : localhost:8000\users\login
 "email": "evgeny@idva.ee",
 "password": "131",
 } 
-```
 
+as response we have got
+{
+	"jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV2Z2VueUBpZHZhLmVlIiwiaWF0IjoxNzM1NDk4NjYzfQ.9kjXCZEMwNdl-e3hf6Ewov9fefmJhPSF3zKSTzsVGjY"
+}
+
+encoded part has 3 part divided by point
+we can check those part on jwp.io site
+```
+ 
 **Used MongoDB Compass(mongosh)**
 
 ```

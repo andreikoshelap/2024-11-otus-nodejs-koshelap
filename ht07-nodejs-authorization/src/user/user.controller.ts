@@ -8,10 +8,14 @@ import { UserRegisterDto } from './dto/user-register.dto';
 import { IUserController } from './interface/users.controller.interface';
 import { UserService } from './user.service';
 import { ValidateMiddleware } from '../common/validate.middleware';
+import {sign} from "jsonwebtoken";
+import {IConfigService} from "../config/interface/config.service.interface";
 
 export class UserController extends BaseController<LogMessage> implements IUserController {
 	private userService: UserService;
-	constructor(logger: LoggerService<LogMessage>, userService: UserService) {
+	private configService: IConfigService;
+
+	constructor(logger: LoggerService<LogMessage>, userService: UserService, configService: IConfigService) {
 		super(logger);
 		this.bindRoutes([
 			{
@@ -26,8 +30,15 @@ export class UserController extends BaseController<LogMessage> implements IUserC
 				func: this.login,
 				middlewares: [new ValidateMiddleware(UserLoginDto)],
 			},
+			{
+				path: '/info',
+				method: 'get',
+				func: this.info,
+				middlewares: [],
+			},
 		]);
 		this.userService = userService;
+		this.configService = configService;
 	}
 
 	async login(
@@ -39,7 +50,8 @@ export class UserController extends BaseController<LogMessage> implements IUserC
 		if (!result) {
 			return next(new HTTPError(401, 'Authorization error', 'login'));
 		}
-		this.ok(res, {});
+		const jwt = await this.signJWT(req.body.email, this.configService.get('SECRET'));
+		this.ok(res, { jwt });
 	}
 
 	async register(
@@ -53,5 +65,30 @@ export class UserController extends BaseController<LogMessage> implements IUserC
 			return next(new HTTPError(422, 'That user already exist'));
 		}
 		this.ok(res, { email: result.email });
+	}
+
+	async info({ user }: Request, res: Response, next: NextFunction): Promise<void> {
+		this.ok(res, { email: user });
+	}
+
+	private signJWT(email: string, secret: string): Promise<string> {
+		return new Promise<string>((resolve, reject) => {
+			sign(
+				{
+					email,
+					iat: Math.floor(Date.now() / 1000),
+				},
+				secret,
+				{
+					algorithm: 'HS256',
+				},
+				(err, token) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(token as string);
+				},
+			);
+		});
 	}
 }
