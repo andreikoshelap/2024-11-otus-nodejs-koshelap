@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.IO Пример</title>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Socket.IO Пример</h1>
+    <div>
+        <input id="messageInput" type="text" placeholder="Введите сообщение">
+        <button onclick="sendMessage()">Отправить</button>
+    </div>
+    <div>
+        <button onclick="joinRoom()">Присоединиться к комнате</button>
+        <input id="roomInput" type="text" placeholder="Имя комнаты">
+    </div>
+    <div>
+        <button onclick="sendChatMessage()">Отправить сообщение в чат</button>
+        <input id="chatInput" type="text" placeholder="Сообщение в чат">
+    </div>
+    <div id="messages"></div>
+
+    <script>
+        // Подключение к основному пространству
+        const socket = io('http://localhost:3000');
+
+        // Отображение сообщений
+        const messagesDiv = document.getElementById('messages');
+
+        function displayMessage(message) {
+            const messageElement = document.createElement('p');
+            messageElement.textContent = message;
+            messagesDiv.appendChild(messageElement);
+        }
+
+        // События Socket.IO
+        socket.on('connect', () => {
+            displayMessage('Соединение установлено');
+        });
+
+        socket.on('response', (data) => {
+            displayMessage(`Сервер: ${data}`);
+        });
+
+        socket.on('roomMessage', (data) => {
+            displayMessage(`Сообщение из комнаты: ${data}`);
+        });
+
+        socket.on('disconnect', () => {
+            displayMessage('Соединение закрыто');
+        });
+
+        // Отправка сообщений
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value;
+            if (message) {
+                socket.emit('message', message);
+                displayMessage(`Вы: ${message}`);
+                input.value = '';
+            }
+        }
+
+        // Присоединение к комнате
+        function joinRoom() {
+            const roomInput = document.getElementById('roomInput');
+            const room = roomInput.value;
+            if (room) {
+                socket.emit('joinRoom', room);
+                displayMessage(`Вы присоединились к комнате: ${room}`);
+                roomInput.value = '';
+            }
+        }
+
+        // Пространство имен "чат"
+        const chatSocket = io('http://localhost:3000/chat');
+
+        chatSocket.on('chatBroadcast', (message) => {
+            displayMessage(`[Чат]: ${message}`);
+        });
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value;
+            if (message) {
+                chatSocket.emit('chatMessage', message);
+                input.value = '';
+            }
+        }
+    </script>
+</body>
+</html>
