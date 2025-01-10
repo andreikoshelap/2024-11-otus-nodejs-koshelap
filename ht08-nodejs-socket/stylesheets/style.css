@@ -1,0 +1,166 @@
+*,
+:after,
+:before {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+
+html, body {
+    box-sizing: border-box;
+}
+#map {
+    height: 400px;
+    width: 500px;
+}
+
+body {
+    font-face: ShantiRegular, arial, FreeSans, sans-serif
+}
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
+
+.row {
+    width: 1000px;
+    max-width: 100%;
+    min-width: 768px;
+    margin: 0 auto;
+}
+
+#logoWrapper {
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#logoWrapper a {
+    display: block;
+    max-width: 450px;
+    height: 30px;
+    width: 345px;
+    background: url('/images/logo2.png') no-repeat transparent;
+}
+
+#container {
+    box-shadow: 0 2px 5px #666;
+    padding: 20px;
+    background: #f6f6f6;
+}
+
+a {
+    color: #00B7FF;
+}
+
+#current-wrapper {
+    color: white;
+    position: relative;
+    display: inline-block;
+    bottom: 10px;
+    left: -36px;
+    padding: 10px;
+    background: #600E15;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: rgba(5, 5, 5, 0.7) 1px 2px 5px;
+    -moz-box-shadow: rgba(5, 5, 5, 0.7) 1px 2px 5px;
+    box-shadow: rgba(5, 5, 5, 0.7) 1px 2px 5px;
+}
+
+.ribbon-wrap {
+    bottom: -5px;
+    left: 5px;
+    position: absolute;
+    width: 16px;
+    height: 19px;
+    background: #44060C;
+    z-index: -1;
+
+    -webkit-transform: rotate(110deg);
+    -moz-transform: rotate(110deg);
+    -ms-transform: rotate(110deg);
+    -o-transform: rotate(110deg);
+    transform: rotate(110deg);
+}
+
+#current-n-name {
+    color: #EDB506;
+    font-size: 1.4em;
+}
+
+#search-wrapper {
+    width: 490px;
+}
+#origin, #dest {
+    width: 100%;
+    font-size: 1.2em;
+    border: 1px solid #DDD;
+    padding: 5px;
+    display: block;
+}
+#origin:focus, #dest:focus {
+    border: 1px solid #DDD;
+    outline: 2px solid #BBB;
+}
+
+#search {
+    font-size: 1.2em;
+    width: 100px;
+    height: 34px;
+    margin: 10px 0 0 0;
+    border: 0;
+    color: #600E15;
+    background: #EDB506;
+    border: 1px solid #C7990B;
+    box-shadow: 1px 1px 3px #999;
+}
+#search:focus {
+    outline: 1px solid #c7990b;
+}
+#search.pressed {
+    outline: 0;
+    box-shadow: 0px 0px 1px #999;
+}
+
+#map {
+    height: 400px;
+    width: 500px;
+}
+
+#results {
+    margin-top: 20px;
+}
+
+#results > div {
+    float: left;
+}
+
+#neighborhoods-wrapper {
+    padding:0 15px;
+}
+
+.hood {
+    line-height: 1.5em;
+}
+
+h2 {
+    margin-top: 0;
+}
