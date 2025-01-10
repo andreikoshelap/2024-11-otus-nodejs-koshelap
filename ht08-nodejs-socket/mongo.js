@@ -1,10 +1,7 @@
-console.log('included 2');
+console.log('included mongo');
 
 var MongoClient = require('mongodb').MongoClient;
 
-/**
- * Get the db connection
- */
 var mongourl = 'mongodb://localhost/otus';
 var dbObj = {};
 

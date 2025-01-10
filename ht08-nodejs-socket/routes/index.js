@@ -1,4 +1,4 @@
-var mongo = require('../getDb');
+var mongo = require('../mongo');
 var request = require('request');
 var routeToLineString = require('../routeToLineString');
 /*
