@@ -7,44 +7,42 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: '*', // Укажите домен вашего клиента
-        methods: ['GET', 'POST'], // Допустимые методы
+        origin: '*',
+        methods: ['GET', 'POST'],
     }
 });
 
 io.on('connection', (socket) => {
-    console.log(`Клиент подключен: ${socket.id}`);
+    console.log(`Client connected: ${socket.id}`);
 
-    // Обработка входящих сообщений
     socket.on('message', (data) => {
-        console.log(`Сообщение от ${socket.id}: ${data}`);
+        console.log(`Message from ${socket.id}: ${data}`);
         socket.emit('response', `Эхо: ${data}`);
     });
 
     socket.on('joinRoom', (room) => {
         socket.join(room);
-        console.log(`Клиент ${socket.id} присоединился к комнате ${room}`);
-        io.to(room).emit('roomMessage', `Пользователь ${socket.id} вошел в комнату ${room}`);
+        console.log(`client ${socket.id} have joined to ${room}`);
+        io.to(room).emit('roomMessage', `User ${socket.id} come to ${room}`);
     });
 
-    // Уведомление о выходе
     socket.on('disconnect', () => {
-        console.log(`Клиент отключен: ${socket.id}`);
+        console.log(`Client disconnected: ${socket.id}`);
     });
 });
 
 const chatNamespace = io.of('/chat');
 chatNamespace.on('connection', (socket) => {
-    console.log(`Пользователь подключился к /chat: ${socket.id}`);
+    console.log(`User joined to chat /chat: ${socket.id}`);
 
     socket.on('chatMessage', (message) => {
-        console.log(`Сообщение в чате: ${message}`);
-        chatNamespace.emit('chatBroadcast', `Новое сообщение: ${message}`);
+        console.log(`Messages on chat: ${message}`);
+        chatNamespace.emit('chatBroadcast', `New message: ${message}`);
     });
 });
 
 server.listen(3000, () => {
-    console.log('Сервер работает на http://localhost:3000');
+    console.log('Server works on http://localhost:3000');
 });
 // app.use(app.router);
 // app.get('/searchNeighborhoods', routes.search);

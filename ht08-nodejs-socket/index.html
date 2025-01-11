@@ -15,24 +15,28 @@
 <body>
     <h1>Socket.IO Пример</h1>
     <div>
-        <input id="messageInput" type="text" placeholder="Введите сообщение">
-        <button onclick="sendMessage()">Отправить</button>
+        <input id="messageInput" type="text" placeholder="Input message">
+        <button onclick="sendMessage()">Send</button>
     </div>
     <div>
-        <button onclick="joinRoom()">Присоединиться к комнате</button>
-        <input id="roomInput" type="text" placeholder="Имя комнаты">
+        <button onclick="joinRoom()">Join to room</button>
+        <input id="roomInput" type="text" placeholder="Room name">
     </div>
     <div>
-        <button onclick="sendChatMessage()">Отправить сообщение в чат</button>
-        <input id="chatInput" type="text" placeholder="Сообщение в чат">
+        <button onclick="sendChatMessage()">Send message to chat</button>
+        <input id="chatInput" type="text" placeholder="Input Message to chat">
     </div>
     <div id="messages"></div>
-
+    <div id="search-wrapper">
+        Bike from
+        <input type="text" id="origin" placeholder="Starting Address" />
+        to
+        <input type="text" id="dest" placeholder="Ending Address" />
+        <input type="button" id="search" value="search" />
+    </div>
     <script>
-        // Подключение к основному пространству
         const socket = io('http://localhost:3000');
 
-        // Отображение сообщений
         const messagesDiv = document.getElementById('messages');
 
         function displayMessage(message) {
@@ -41,46 +45,42 @@
             messagesDiv.appendChild(messageElement);
         }
 
-        // События Socket.IO
         socket.on('connect', () => {
-            displayMessage('Соединение установлено');
+            displayMessage('Connected');
         });
 
         socket.on('response', (data) => {
-            displayMessage(`Сервер: ${data}`);
+            displayMessage(`Server: ${data}`);
         });
 
         socket.on('roomMessage', (data) => {
-            displayMessage(`Сообщение из комнаты: ${data}`);
+            displayMessage(`Message from room: ${data}`);
         });
 
         socket.on('disconnect', () => {
-            displayMessage('Соединение закрыто');
+            displayMessage('Disconnected');
         });
 
-        // Отправка сообщений
         function sendMessage() {
             const input = document.getElementById('messageInput');
             const message = input.value;
             if (message) {
                 socket.emit('message', message);
-                displayMessage(`Вы: ${message}`);
+                displayMessage(`You: ${message}`);
                 input.value = '';
             }
         }
 
-        // Присоединение к комнате
         function joinRoom() {
             const roomInput = document.getElementById('roomInput');
             const room = roomInput.value;
             if (room) {
                 socket.emit('joinRoom', room);
-                displayMessage(`Вы присоединились к комнате: ${room}`);
+                displayMessage(`You have joined to room: ${room}`);
                 roomInput.value = '';
             }
         }
 
-        // Пространство имен "чат"
         const chatSocket = io('http://localhost:3000/chat');
 
         chatSocket.on('chatBroadcast', (message) => {
@@ -101,7 +101,7 @@
         <div id="map"></div>
     </div>
     </div>
-    <script type="text/javascript" src="zepto.js"></script>
-    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="javascripts/zepto.js"></script>
+    <script type="text/javascript" src="javascripts/map-functions.js"></script>
 </body>
 </html>
