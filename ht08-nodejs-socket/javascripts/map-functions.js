@@ -1,133 +1,145 @@
-$(function () {
-    if ('geolocation' in navigator) {
-        refreshCurrent();
-    } else {
-        $('#current-wrapper').html(
-            "(We can't seem to get this device's location)"
-        );
-    }
+/**
+ * geocoding addresses search engine outside the map
+ */
 
-    function refreshCurrent(ev) {
-        if (ev) ev.preventDefault();
-        navigator.geolocation.getCurrentPosition(queryCurrentNeighborhood);
-    }
+window.addEventListener("DOMContentLoaded", function () {
+    // Autocomplete
+    new Autocomplete("search", {
+        delay: 1000,
+        selectFirst: true,
+        howManyCharacters: 2,
 
-    function queryCurrentNeighborhood(pos) {
-        $.getJSON(
-            '/currentNeighborhood?lat=' +
-            pos.coords.latitude +
-            '&lng=' +
-            pos.coords.longitude,
-            displayCurrentNeighborhood
-        );
-    }
+        onSearch: function ({ currentValue }) {
+            const api = `https://nominatim.openstreetmap.org/search?format=geojson&limit=5&q=${encodeURI(
+                currentValue
+            )}`;
 
-    function displayCurrentNeighborhood(data) {
-        if (!data.name) {
-            $('#current-n-name').text('(unknown)');
-        } else {
-            $('#current-n-name').text(data.name);
-        }
-    }
+            // You can also use static files
+            // const api = './search.json'
 
-    var originEl = $('#origin'),
-        destEl = $('#dest'),
-        searchBtnEl = $('#search'),
-        neighborhoodEl = $('#neighborhoods');
+            /**
+             * jquery
+             * If you want to use jquery you have to add the
+             * jquery library to head html
+             * https://cdnjs.com/libraries/jquery
+             */
+            // return $.ajax({
+            //   url: api,
+            //   method: 'GET',
+            // })
+            //   .done(function (data) {
+            //     return data
+            //   })
+            //   .fail(function (xhr) {
+            //     console.error(xhr);
+            //   });
 
-    function displayResults(data) {
-        if (data.error) {
-            alert(data.errorMessage);
-        } else {
-            listNeighborhoods(data.neighborhoodNames);
-            redrawMap(data.route);
-        }
-    }
+            // OR ----------------------------------
 
-    function listNeighborhoods(neighborhoods) {
-        neighborhoodEl.empty();
-        for (var i = 0, ii = neighborhoods.length; i < ii; i++) {
-            neighborhoodEl.append(
-                '<div class="hood">' + neighborhoods[i] + '</div>'
-            );
-        }
-    }
+            /**
+             * axios
+             * If you want to use axios you have to add the
+             * axios library to head html
+             * https://cdnjs.com/libraries/axios
+             */
+            // return axios.get(api)
+            //   .then((response) => {
+            //     return response.data;
+            //   })
+            //   .catch(error => {
+            //     console.log(error);
+            //   });
 
-    var currentRoute;
-    function redrawMap(route) {
-        if (currentRoute) map.removeLayer(currentRoute);
-        var Lroute = route.map(function (coords) {
-            return new L.LatLng(coords[1], coords[0]);
-        });
+            // OR ----------------------------------
 
-        currentRoute = L.polyline(Lroute, { color: 'blue' }).addTo(map);
-        map.fitBounds(currentRoute.getBounds());
-    }
+            /**
+             * Promise
+             */
+            return new Promise((resolve) => {
+                fetch(api)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        resolve(data.features);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            });
+        },
+        // nominatim
+        onResults: ({ currentValue, matches, template }) => {
+            const regex = new RegExp(currentValue, "i");
+            // checking if we have results if we don't
+            // take data from the noResults method
+            return matches === 0
+                ? template
+                : matches
+                    .map((element) => {
+                        return `
+              <li class="loupe" role="option">
+                ${element.properties.display_name.replace(
+                            regex,
+                            (str) => `<b>${str}</b>`
+                        )}
+              </li> `;
+                    })
+                    .join("");
+        },
 
-    function getNeighborhoods() {
-        var originAddress = originEl.val();
-        var destAddress = destEl.val();
+        onSubmit: ({ object }) => {
+            const { display_name } = object.properties;
+            const cord = object.geometry.coordinates;
+            // custom id for marker
+            const customId = Math.random();
 
-        if (!originAddress || !destAddress) {
-            return alert('Please fill in both start and end addresses');
-        }
+            const marker = L.marker([cord[1], cord[0]], {
+                title: display_name,
+                id: customId,
+            });
 
-        $.getJSON(
-            '/searchNeighborhoods?or=' +
-            encodeURI(originAddress) +
-            '&dest=' +
-            encodeURI(destAddress),
-            displayResults
-        );
-    }
+            marker.addTo(map).bindPopup(display_name);
 
-    searchBtnEl.bind('click', getNeighborhoods);
+            map.setView([cord[1], cord[0]], 8);
 
-    let config = {
-        minZoom: 7,
+            map.eachLayer(function (layer) {
+                if (layer.options && layer.options.pane === "markerPane") {
+                    if (layer.options.id !== customId) {
+                        map.removeLayer(layer);
+                    }
+                }
+            });
+        },
+
+        // get index and data from li element after
+        // hovering over li with the mouse or using
+        // arrow keys ↓ | ↑
+        onSelectedItem: ({ index, element, object }) => {
+            console.log("onSelectedItem:", index, element, object);
+        },
+
+        // the method presents no results
+        noResults: ({ currentValue, template }) =>
+            template(`<li>No results found: "${currentValue}"</li>`),
+    });
+
+    // MAP
+    const config = {
+        minZoom: 6,
         maxZoom: 18,
     };
-    const zoom = 18;
+    // magnification with which the map will start
+    const zoom = 3;
+    // co-ordinates
     const lat = 52.22977;
     const lng = 21.01178;
 
+    // calling map
     const map = L.map("map", config).setView([lat, lng], zoom);
 
+    // Used to load and display tile layers on the map
+    // Most tile servers require attribution, which you can set under `Layer`
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
-
-    map
-        .locate({
-            // https://leafletjs.com/reference-1.7.1.html#locate-options-option
-            setView: true,
-            enableHighAccuracy: true,
-        })
-        // if location found show marker and circle
-        .on("locationfound", (e) => {
-            console.log(e);
-            // marker
-            const marker = L.marker([e.latitude, e.longitude]).bindPopup(
-                "Your are here :)"
-            );
-            // circle
-            const circle = L.circle([e.latitude, e.longitude], e.accuracy / 2, {
-                weight: 2,
-                color: "red",
-                fillColor: "red",
-                fillOpacity: 0.1,
-            });
-            // add marker
-            map.addLayer(marker);
-            // add circle
-            map.addLayer(circle);
-        })
-        // if error show alert
-        .on("locationerror", (e) => {
-            console.log(e);
-            alert("Location access denied.");
-        });
-
-
 });

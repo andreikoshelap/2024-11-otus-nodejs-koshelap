@@ -1,107 +1,110 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Socket.IO Пример</title>
+    <title>Socket.IO</title>
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
     <link
             rel="stylesheet"
             href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
     />
-    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"></script>
     <link rel="stylesheet" href="stylesheets/style.css" />
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/tomickigrzegorz/autocomplete@1.8.6/dist/css/autocomplete.min.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/tomickigrzegorz/autocomplete@1.8.6/dist/js/autocomplete.min.js"></script>
 </head>
+
 <body>
-    <h1>Socket.IO Пример</h1>
-    <div>
-        <input id="messageInput" type="text" placeholder="Input message">
-        <button onclick="sendMessage()">Send</button>
-    </div>
-    <div>
-        <button onclick="joinRoom()">Join to room</button>
-        <input id="roomInput" type="text" placeholder="Room name">
-    </div>
-    <div>
-        <button onclick="sendChatMessage()">Send message to chat</button>
-        <input id="chatInput" type="text" placeholder="Input Message to chat">
-    </div>
-    <div id="messages"></div>
-    <div id="search-wrapper">
-        Bike from
-        <input type="text" id="origin" placeholder="Starting Address" />
-        to
-        <input type="text" id="dest" placeholder="Ending Address" />
-        <input type="button" id="search" value="search" />
-    </div>
-    <script>
-        const socket = io('http://localhost:3000');
+<h1>Socket.IO</h1>
+<div>
+    <input id="messageInput" type="text" placeholder="Input message">
+    <button onclick="sendMessage()">Send</button>
+</div>
 
-        const messagesDiv = document.getElementById('messages');
+<div id="messages"></div>
 
-        function displayMessage(message) {
-            const messageElement = document.createElement('p');
-            messageElement.textContent = message;
-            messagesDiv.appendChild(messageElement);
+<script>
+    const socket = io('http://localhost:3000');
+
+    const messagesDiv = document.getElementById('messages');
+
+    function displayMessage(message) {
+        const messageElement = document.createElement('p');
+        messageElement.textContent = message;
+        messagesDiv.appendChild(messageElement);
+    }
+
+    socket.on('connect', () => {
+        displayMessage('Connected');
+    });
+
+    socket.on('response', (data) => {
+        displayMessage(`Server: ${data}`);
+    });
+
+    socket.on('roomMessage', (data) => {
+        displayMessage(`Message from room: ${data}`);
+    });
+
+    socket.on('disconnect', () => {
+        displayMessage('Disconnected');
+    });
+
+    function sendMessage() {
+        const input = document.getElementById('messageInput');
+        const message = input.value;
+        if (message) {
+            socket.emit('message', message);
+            displayMessage(`You: ${message}`);
+            input.value = '';
         }
+    }
 
-        socket.on('connect', () => {
-            displayMessage('Connected');
-        });
-
-        socket.on('response', (data) => {
-            displayMessage(`Server: ${data}`);
-        });
-
-        socket.on('roomMessage', (data) => {
-            displayMessage(`Message from room: ${data}`);
-        });
-
-        socket.on('disconnect', () => {
-            displayMessage('Disconnected');
-        });
-
-        function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const message = input.value;
-            if (message) {
-                socket.emit('message', message);
-                displayMessage(`You: ${message}`);
-                input.value = '';
-            }
+    function joinRoom() {
+        const roomInput = document.getElementById('roomInput');
+        const room = roomInput.value;
+        if (room) {
+            socket.emit('joinRoom', room);
+            displayMessage(`You have joined to room: ${room}`);
+            roomInput.value = '';
         }
+    }
 
-        function joinRoom() {
-            const roomInput = document.getElementById('roomInput');
-            const room = roomInput.value;
-            if (room) {
-                socket.emit('joinRoom', room);
-                displayMessage(`You have joined to room: ${room}`);
-                roomInput.value = '';
-            }
+    const chatSocket = io('http://localhost:3000/chat');
+
+    chatSocket.on('chatBroadcast', (message) => {
+        displayMessage(`[Чат]: ${message}`);
+    });
+
+    function sendChatMessage() {
+        const input = document.getElementById('chatInput');
+        const message = input.value;
+        if (message) {
+            chatSocket.emit('chatMessage', message);
+            input.value = '';
         }
-
-        const chatSocket = io('http://localhost:3000/chat');
-
-        chatSocket.on('chatBroadcast', (message) => {
-            displayMessage(`[Чат]: ${message}`);
-        });
-
-        function sendChatMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value;
-            if (message) {
-                chatSocket.emit('chatMessage', message);
-                input.value = '';
-            }
-        }
-    </script>
-    <div id="container" class="row">
-    <div id="results" class="cf">
-        <div id="map"></div>
+    }
+</script>
+<!-- search container -->
+<div class="container">
+    <div class="auto-search-wrapper loupe">
+        <input
+                type="text"
+                autocomplete="off"
+                id="search"
+                placeholder="enter the city name"
+        />
     </div>
-    </div>
-    <script type="text/javascript" src="javascripts/zepto.js"></script>
-    <script type="text/javascript" src="javascripts/map-functions.js"></script>
+</div>
+
+<!-- map -->
+<div id="map"></div>
+
+<script src="javascripts/map-functions.js"></script>
+<!-- https://github.com/tomickigrzegorz/autosuggest -->
 </body>
 </html>
