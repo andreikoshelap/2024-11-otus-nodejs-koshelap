@@ -1,6 +1,6 @@
-var mongo = require('../javascripts/mongo');
+var mongo = require('../javascript/mongo');
 var request = require('request');
-var routeToLineString = require('../javascripts/routeToLineString');
+var routeToLineString = require('../javascript/routeToLineString');
 /*
  * GET home page.
  */

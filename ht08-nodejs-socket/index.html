@@ -54,41 +54,6 @@
         displayMessage('Disconnected');
     });
 
-    function sendMessage() {
-        const input = document.getElementById('messageInput');
-        const message = input.value;
-        if (message) {
-            socket.emit('message', message);
-            displayMessage(`You: ${message}`);
-            input.value = '';
-        }
-    }
-
-    function joinRoom() {
-        const roomInput = document.getElementById('roomInput');
-        const room = roomInput.value;
-        if (room) {
-            socket.emit('joinRoom', room);
-            displayMessage(`You have joined to room: ${room}`);
-            roomInput.value = '';
-        }
-    }
-
-    const chatSocket = io('http://localhost:3000/chat');
-
-    chatSocket.on('chatBroadcast', (message) => {
-        displayMessage(`[Чат]: ${message}`);
-    });
-
-    function sendChatMessage() {
-        const input = document.getElementById('chatInput');
-        const message = input.value;
-        if (message) {
-            chatSocket.emit('chatMessage', message);
-            input.value = '';
-        }
-    }
-</script>
 <!-- search container -->
 <div class="container">
     <div class="auto-search-wrapper loupe">
@@ -104,7 +69,8 @@
 <!-- map -->
 <div id="map"></div>
 
-<script src="javascripts/map-functions.js"></script>
-<!-- https://github.com/tomickigrzegorz/autosuggest -->
+<script type="text/javascript" src="javascript/zepto.js"></script>
+<script src="javascript/map-functions.js"></script>
+
 </body>
 </html>
