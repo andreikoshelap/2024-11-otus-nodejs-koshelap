@@ -19,14 +19,51 @@
 </head>
 
 <body>
+
+
 <h1>Socket.IO</h1>
 <div>
     <input id="messageInput" type="text" placeholder="Input message">
-<!--    <button onclick="sendMessage()">Send</button>-->
+    <button onclick="sendMessage()">Send</button>
 </div>
 
 <div id="messages"></div>
 
+<script>
+    const socket = io('http://localhost:3000');
+
+    const messagesDiv = document.getElementById('messages');
+
+    function displayMessage(message) {
+        const messageElement = document.createElement('p');
+        messageElement.textContent = message;
+        messagesDiv.appendChild(messageElement);
+    }
+
+    socket.on('connect', () => {
+        displayMessage('Connected');
+    });
+
+    socket.on('response', (data) => {
+        displayMessage(`Server: ${data}`);
+    });
+
+    socket.on('disconnect', () => {
+        displayMessage('Disconnected');
+    });
+
+    function sendMessage() {
+        const input = document.getElementById('messageInput');
+        console.log(`test ${input.value}`);
+        const message = input.value;
+        if (message) {
+            socket.emit('message', message);
+            displayMessage(`You: ${message}`);
+            input.value = '';
+        }
+    }
+
+</script>
 <!-- search container -->
 <div class="container">
     <div class="auto-search-wrapper loupe">
@@ -43,6 +80,6 @@
 <div class="marker-position">Click on map</div>
 <div id="map"></div>
 
-<script type="module" src="javascript/map-functions.js"></script>
+<script src="javascript/map-functions.js"></script>
 </body>
 </html>

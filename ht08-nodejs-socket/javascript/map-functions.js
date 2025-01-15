@@ -1,7 +1,7 @@
 /**
  * geocoding addresses search engine outside the map
  */
-import {sendMessage} from './socket.js';
+// import {sendMessage} from './socket.js';
 
 window.addEventListener("DOMContentLoaded", function () {
     // Autocomplete
@@ -124,6 +124,8 @@ window.addEventListener("DOMContentLoaded", function () {
             template(`<li>No results found: "${currentValue}"</li>`),
     });
 
+    const messageInput = document.getElementById("messageInput");
+
     // MAP
     const config = {
         minZoom: 6,
@@ -147,7 +149,11 @@ window.addEventListener("DOMContentLoaded", function () {
 
     // obtaining coordinates after clicking on the map
     map.on("click", function (e) {
-        const markerPlace = document.querySelector(".marker-position");
-        markerPlace.textContent = e.latlng;
+        // Координаты точки клика
+        const { lat, lng } = e.latlng;
+
+        // Записываем координаты в поле messageInput
+        messageInput.value = `Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}`;
+
     });
 });

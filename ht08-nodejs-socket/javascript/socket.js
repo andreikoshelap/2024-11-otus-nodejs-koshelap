@@ -20,7 +20,7 @@ socket.on('disconnect', () => {
     displayMessage('Disconnected');
 });
 
-export function sendMessage(latlng) {
+export function sendMessage() {
     const input = document.getElementById('messageInput');
     // const input = document.getElementsByClassName("marker-position");
     console.log(`test ${input.value}`);
