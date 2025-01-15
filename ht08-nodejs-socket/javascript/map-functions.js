@@ -1,6 +1,7 @@
 /**
  * geocoding addresses search engine outside the map
  */
+import {sendMessage} from './socket.js';
 
 window.addEventListener("DOMContentLoaded", function () {
     // Autocomplete
@@ -115,6 +116,7 @@ window.addEventListener("DOMContentLoaded", function () {
         // arrow keys ↓ | ↑
         onSelectedItem: ({ index, element, object }) => {
             console.log("onSelectedItem:", index, element, object);
+            sendMessage();
         },
 
         // the method presents no results
@@ -142,4 +144,10 @@ window.addEventListener("DOMContentLoaded", function () {
         attribution:
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
+
+    // obtaining coordinates after clicking on the map
+    map.on("click", function (e) {
+        const markerPlace = document.querySelector(".marker-position");
+        markerPlace.textContent = e.latlng;
+    });
 });

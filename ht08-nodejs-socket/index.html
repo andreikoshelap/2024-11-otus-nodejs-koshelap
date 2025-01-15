@@ -9,7 +9,7 @@
             rel="stylesheet"
             href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
     />
-    <link rel="stylesheet" href="stylesheets/style.css" />
+    <link rel="stylesheet" href="stylesheet/style.css" />
     <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/gh/tomickigrzegorz/autocomplete@1.8.6/dist/css/autocomplete.min.css"
@@ -22,37 +22,10 @@
 <h1>Socket.IO</h1>
 <div>
     <input id="messageInput" type="text" placeholder="Input message">
-    <button onclick="sendMessage()">Send</button>
+<!--    <button onclick="sendMessage()">Send</button>-->
 </div>
 
 <div id="messages"></div>
-
-<script>
-    const socket = io('http://localhost:3000');
-
-    const messagesDiv = document.getElementById('messages');
-
-    function displayMessage(message) {
-        const messageElement = document.createElement('p');
-        messageElement.textContent = message;
-        messagesDiv.appendChild(messageElement);
-    }
-
-    socket.on('connect', () => {
-        displayMessage('Connected');
-    });
-
-    socket.on('response', (data) => {
-        displayMessage(`Server: ${data}`);
-    });
-
-    socket.on('roomMessage', (data) => {
-        displayMessage(`Message from room: ${data}`);
-    });
-
-    socket.on('disconnect', () => {
-        displayMessage('Disconnected');
-    });
 
 <!-- search container -->
 <div class="container">
@@ -67,10 +40,9 @@
 </div>
 
 <!-- map -->
+<div class="marker-position">Click on map</div>
 <div id="map"></div>
 
-<script type="text/javascript" src="javascript/zepto.js"></script>
-<script src="javascript/map-functions.js"></script>
-
+<script type="module" src="javascript/map-functions.js"></script>
 </body>
 </html>

@@ -20,12 +20,6 @@ io.on('connection', (socket) => {
         socket.emit('response', `Эхо: ${data}`);
     });
 
-    socket.on('joinRoom', (room) => {
-        socket.join(room);
-        console.log(`client ${socket.id} have joined to ${room}`);
-        io.to(room).emit('roomMessage', `User ${socket.id} come to ${room}`);
-    });
-
     socket.on('disconnect', () => {
         console.log(`Client disconnected: ${socket.id}`);
     });
