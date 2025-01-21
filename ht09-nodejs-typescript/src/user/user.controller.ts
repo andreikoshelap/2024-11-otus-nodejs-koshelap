@@ -68,7 +68,8 @@ export class UserController extends BaseController<LogMessage> implements IUserC
 		this.ok(res, { email: result.email });
 	}
 
-	async info({ user }: Request, res: Response, next: NextFunction): Promise<void> {
+	async info({ user }: Request<object, object, UserRegisterDto>, res: Response, next: NextFunction): Promise<void> {
+		console.log(JSON.stringify(user));
 		const userInfo = await this.userService.getUserInfo(user);
 		this.ok(res, { email: userInfo?.email, id: userInfo?.id });
 	}

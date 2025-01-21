@@ -1,13 +1,15 @@
-import mongoose, {Schema, Model} from 'mongoose';
+import mongoose, {Schema, Model, Types} from 'mongoose';
 import {IUser} from './interface/user.entity.interface';
 import {IUserModel} from './interface/user.model.interface';
+import { v4 as uuidv4 } from 'uuid';
 
 const userSchema = new Schema<IUser>(
     {
-        id: {type: String, required: true, unique: true},
+        id : {type: String, required: true, unique: true},
         email: {type: String, required: true, unique: true},
-        password: {type: String, required: true},
         name: {type: String, required: true},
+        password: {type: String, required: true},
+        teacher: {type: "Boolean", required: false}
     },
     {
         timestamps: true,
@@ -25,9 +27,12 @@ export class UserModel implements IUserModel {
         if (!userData.email || !userData.name || !userData.password) {
             throw new Error('Missing required fields: email, name, or password');
         }
+        const uniqueId = uuidv4();
+        console.log("used data " + uniqueId)
         const user = new this.model({
-            name: userData.name,
+            id: uniqueId,
             email: userData.email,
+            name: userData.name,
             password: userData.password,
             teacher: false,
         });

@@ -6,6 +6,7 @@ import { ConfigService } from '../config/config.service';
 import { UserModel } from './user.model';
 import { IUser } from './interface/user.entity.interface';
 
+
 export class UserService implements IUserService {
 	private userModel: UserModel;
 
@@ -13,8 +14,9 @@ export class UserService implements IUserService {
 		this.userModel = userModel;
 	}
 
-	async createUser({ id, email, name, password }: UserRegisterDto): Promise<IUser | null> {
-		const newUser = new User(email, name, password, false);
+	async createUser({ email, name, password }: UserRegisterDto): Promise<IUser | null> {
+
+		const newUser = new User( email, name, password, false);
 		await newUser.setPassword(password);
 		const existedUser = await this.userModel.findByEmail(email);
 		if (existedUser) {

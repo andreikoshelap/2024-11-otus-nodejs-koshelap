@@ -1,7 +1,7 @@
 {
-	"name": "ht07-nodejs-authentication",
-	"version": "1.7.0",
-	"description": "Homework number seven",
+	"name": "ht09-nodejs-typescript",
+	"version": "1.9.0",
+	"description": "Homework number nine",
 	"main": "app.js",
 	"scripts": {
 		"start": "node ./dist/src/main.js",
@@ -31,7 +31,8 @@
 		"swagger-jsdoc": "^6.2.8",
 		"swagger-ui-express": "^5.0.1",
 		"ts-jest": "^29.2.5",
-		"tslog": "^4.9.3"
+		"tslog": "^4.9.3",
+		"uuid": "^11.0.5"
 	},
 	"devDependencies": {
 		"@types/express": "^5.0.0",

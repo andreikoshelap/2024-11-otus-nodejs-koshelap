@@ -84,41 +84,6 @@
  *       400:
  *         description: Bad request
  *
- *
- * /users/info:
- *   get:
- *     summary: information about existing user by email
- *     description: This endpoint checking existing user in the system.
- *     tags:
- *         - Users
- *       parameters:
- *         - in: header
- *           name: Authorization
- *           required: true
- *           schema:
- *             type: string
- *           description: Bearer token for authentication
- *     responses:
- *       200:
- *         description: User information
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 id:
- *                   type: string
- *                   description: ID of the created user
- *                   example: 123456
- *                 email:
- *                   type: string
- *                   description: Email of existing user
- *                   example: john.doe@example.com
- *       401:
- *         description: Unauthorized
- *       403:
- *         description: Forbidden
- *
  * /courses/new:
  *   post:
  *     summary: Create a new course
@@ -180,7 +145,7 @@
  *                 type: string
  *                 description: Name of user who organize this course
  *                 example: John Doe
- *    responses:
+ *     responses:
  *       201:
  *         description: Course created successfully
  *         content:
@@ -198,4 +163,5 @@
  *                   example: Node.js
  *       400:
  *         description: Bad request
+ *
  */
