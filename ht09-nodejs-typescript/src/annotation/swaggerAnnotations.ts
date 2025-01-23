@@ -164,4 +164,44 @@
  *       400:
  *         description: Bad request
  *
- */
+ * /users/info:
+ *    post:
+ *     summary: Find existing user by email.
+ *     description: This endpoint checking existing user in the system.
+ *     tags:
+ *         - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Name of the course
+ *                 example: Node.js
+ *               teacher:
+ *                 type: string
+ *                 description: Name of user who organize this course
+ *                 example: John Doe
+ *     responses:
+ *          201:
+ *              description: User created successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              id:
+ *                                  type: string
+ *                                  description: ID of the created user
+ *                                  example: 123456
+ *                              name:
+ *                                  type: string
+ *                                  description: Name of the created user
+ *                                  example: John Doe
+ *          400:
+ *              description: Bad request
+ *
+ * */
