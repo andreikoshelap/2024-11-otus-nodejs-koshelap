@@ -11,6 +11,9 @@ const userServiceMock: IUserService = {
         password: '1',
     }),
     validateUser: jest.fn().mockResolvedValue(true),
+    getUserInfo:jest.fn().mockResolvedValue({
+        email: 'a@a.ru',
+    }),
 };
 
 const usersModelMock: IUserModel = {

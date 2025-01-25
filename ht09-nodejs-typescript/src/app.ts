@@ -2,7 +2,7 @@ import express, { Express } from 'express';
 import { LoggerService } from './logger/logger.service';
 import { Server } from 'http';
 import { ExeptionFilter } from './error/exeption.filter';
-import { LogMessage } from './logger/logger.interface';
+import { ILogger } from './logger/logger.interface';
 import { UserController } from './user/user.controller';
 import { json } from 'body-parser';
 import { Database } from './database/database.service';
@@ -16,13 +16,13 @@ export class App {
 	app: Express;
 	server: Server;
 	port: number;
-	logger: LoggerService<LogMessage>;
+	logger: LoggerService<ILogger>;
 	userController: UserController;
 	courseController: CourseController;
 	exceptionFilter: ExeptionFilter;
 	configService: IConfigService;
 	constructor(
-		logger: LoggerService<LogMessage>,
+		logger: LoggerService<ILogger>,
 		userController: UserController,
 		courseController: CourseController,
 		exeptionFilter: ExeptionFilter,

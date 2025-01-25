@@ -1,5 +1,5 @@
 import {BaseController} from '../common/base.controller';
-import {LogMessage} from '../logger/logger.interface';
+import {ILogger} from '../logger/logger.interface';
 import {ICourseController} from "./interface/course.controller.interface";
 import {LoggerService} from "../logger/logger.service";
 import {CourseService} from "./course.service";
@@ -8,11 +8,11 @@ import {CourseDto} from "./dto/course.dto";
 import {NextFunction, Request, Response} from "express";
 import {HTTPError} from "../error/http-error.class";
 
-export class CourseController extends BaseController<LogMessage> implements ICourseController {
+export class CourseController extends BaseController<ILogger> implements ICourseController {
 
     private courseService: CourseService;
 
-    constructor(logger: LoggerService<LogMessage>, courseService: CourseService) {
+    constructor(logger: LoggerService<ILogger>, courseService: CourseService) {
         super(logger);
         this.bindRoutes([
             {

@@ -1,23 +1,27 @@
 import {BaseController} from '../common/base.controller';
 import {NextFunction, Request, Response} from 'express';
-import {LoggerService} from '../logger/logger.service';
-import {LogMessage} from '../logger/logger.interface';
+import {ILogger} from '../logger/logger.interface';
 import {HTTPError} from '../error/http-error.class';
 import {UserLoginDto} from './dto/user-login.dto';
 import {UserRegisterDto} from './dto/user-register.dto';
 import {IUserController} from './interface/users.controller.interface';
-import {UserService} from './user.service';
 import {ValidateMiddleware} from '../common/validate.middleware';
 import {sign} from "jsonwebtoken";
 import {IConfigService} from "../config/interface/config.service.interface";
 import {GuardMiddleware} from "../common/guard.middleware";
+import {inject, injectable} from "inversify";
+import {IUserService} from "./interface/users.service.interface";
+import {TYPES} from "../types";
+import 'reflect-metadata';
 
-export class UserController extends BaseController<LogMessage> implements IUserController {
-    private userService: UserService;
-    private configService: IConfigService;
-
-    constructor(logger: LoggerService<LogMessage>, userService: UserService, configService: IConfigService) {
-        super(logger);
+@injectable()
+export class UserController extends BaseController<ILogger> implements IUserController {
+    constructor(
+        @inject(TYPES.ILogger) private loggerService: ILogger,
+        @inject(TYPES.UserService) private userService: IUserService,
+        @inject(TYPES.ConfigService) private configService: IConfigService,
+    ) {
+        super(loggerService);
         this.bindRoutes([
             {
                 path: '/register',
