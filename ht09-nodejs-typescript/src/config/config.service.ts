@@ -3,16 +3,20 @@ import { config, DotenvConfigOutput, DotenvParseOutput } from 'dotenv';
 import {LoggerService} from "../logger/logger.service";
 import {ILogger} from "../logger/logger.interface";
 import { IConfigService } from './interface/config.service.interface';
+import {inject, injectable} from "inversify";
+import 'reflect-metadata';
+import {TYPES} from "../types";
 
+@injectable()
 export class ConfigService implements IConfigService{
 	private _config: DotenvParseOutput;
-	constructor(private logger: LoggerService<ILogger>) {
+	constructor(@inject(TYPES.ILogger) private loggerService: ILogger) {
 		const result: DotenvConfigOutput = config();
 		if (result.error) {
-			this.logger.error('[ConfigService] can not read file .env or it absent');
+			this.loggerService.error('[ConfigService] can not read file .env or it absent');
 			this._config = result.parsed as DotenvParseOutput;
 		} else {
-			this.logger.log('[ConfigService] Configuration .env loaded');
+			this.loggerService.log('[ConfigService] Configuration .env loaded');
 			this._config = result.parsed as DotenvParseOutput;
 		}
 	}

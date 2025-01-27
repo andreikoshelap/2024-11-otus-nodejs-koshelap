@@ -1,7 +1,5 @@
 import express, { Express } from 'express';
-import { LoggerService } from './logger/logger.service';
 import { Server } from 'http';
-import { ExeptionFilter } from './error/exeption.filter';
 import { ILogger } from './logger/logger.interface';
 import { UserController } from './user/user.controller';
 import { json } from 'body-parser';
@@ -11,22 +9,23 @@ import swaggerSpec from './annotation/swaggerConfig';
 import {CourseController} from "./course/course.controller";
 import {IConfigService} from "./config/interface/config.service.interface";
 import {AuthMiddleware} from "./common/auth.middleware";
+import 'reflect-metadata';
+import {inject, injectable} from "inversify";
+import {TYPES} from "./types";
+import {IExceptionFilter} from "./error/exception.filter.interface";
 
+@injectable()
 export class App {
 	app: Express;
 	server: Server;
 	port: number;
-	logger: LoggerService<ILogger>;
-	userController: UserController;
-	courseController: CourseController;
-	exceptionFilter: ExeptionFilter;
-	configService: IConfigService;
+
 	constructor(
-		logger: LoggerService<ILogger>,
-		userController: UserController,
-		courseController: CourseController,
-		exeptionFilter: ExeptionFilter,
-		configService: IConfigService,
+		@inject(TYPES.ILogger) private logger: ILogger,
+		@inject(TYPES.UserController) private userController: UserController,
+		@inject(TYPES.CourseController) private courseController: CourseController,
+		@inject(TYPES.ExceptionFilter) private exceptionFilter: IExceptionFilter,
+		@inject(TYPES.ConfigService) private configService: IConfigService,
 	) {
 		const db = new Database('mongodb://localhost:27017/otus');
 		db.connect();
@@ -36,7 +35,7 @@ export class App {
 		this.server = this.app.listen(this.port);
 		this.userController = userController;
 		this.courseController = courseController;
-		this.exceptionFilter = exeptionFilter;
+		this.exceptionFilter = exceptionFilter;
 		this.configService = configService;
 	}
 

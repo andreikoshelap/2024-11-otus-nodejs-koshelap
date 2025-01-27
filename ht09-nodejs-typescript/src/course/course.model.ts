@@ -1,6 +1,7 @@
 import mongoose, {Schema, Model} from 'mongoose';
 import {ICourseModel} from "./interface/course.model.interface";
 import {ICourse} from "./interface/course.entity.interface";
+import {injectable} from "inversify";
 
 const userSchema = new Schema<ICourse>(
     {
@@ -12,6 +13,7 @@ const userSchema = new Schema<ICourse>(
     },
 );
 
+@injectable()
 export class CourseModel implements ICourseModel {
     private model: Model<ICourse>;
 

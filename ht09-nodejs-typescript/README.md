@@ -5,14 +5,15 @@
 ## Features
 
 -   **Student testing application number 9**
--   **Purpose**: Application on TypeScript
--   **Result**: Add injections on existed project
+-   **Purpose**: Application on TypeScript + Add dependency injection
+-   **Result**: Add dependency injections on existed project
 
 -   **Modern Backend Stack**:
     -   **Express** server wrapper application
     -   **MongoDB** Database framework
     -   **typeScript** javaScript typed builder
     -   **Swagger** providing REST API endpoints
+    -   **inversify** providing dependency injection
 
 ---
 

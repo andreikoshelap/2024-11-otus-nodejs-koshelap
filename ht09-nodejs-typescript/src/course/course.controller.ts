@@ -7,13 +7,20 @@ import {ValidateMiddleware} from "../common/validate.middleware";
 import {CourseDto} from "./dto/course.dto";
 import {NextFunction, Request, Response} from "express";
 import {HTTPError} from "../error/http-error.class";
+import 'reflect-metadata';
+import {inject, injectable} from "inversify";
+import {TYPES} from "../types";
+import {IUserService} from "../user/interface/users.service.interface";
+import {ICourseService} from "./interface/course.service.interface";
 
+@injectable()
 export class CourseController extends BaseController<ILogger> implements ICourseController {
 
-    private courseService: CourseService;
-
-    constructor(logger: LoggerService<ILogger>, courseService: CourseService) {
-        super(logger);
+    constructor(
+        @inject(TYPES.ILogger) private loggerService: ILogger,
+        @inject(TYPES.CourseService) private courseService: ICourseService,
+    ) {
+        super(loggerService);
         this.bindRoutes([
             {
                 path: '/new',

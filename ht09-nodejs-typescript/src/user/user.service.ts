@@ -2,17 +2,17 @@ import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { User } from './user.entity';
 import { IUserService } from './interface/users.service.interface';
-import { ConfigService } from '../config/config.service';
 import { UserModel } from './user.model';
 import { IUser } from './interface/user.entity.interface';
+import {inject, injectable} from "inversify";
+import {TYPES} from "../types";
 
-
+@injectable()
 export class UserService implements IUserService {
-	private userModel: UserModel;
-
-	constructor( userModel: UserModel) {
-		this.userModel = userModel;
-	}
+	constructor(
+		// @inject(TYPES.ConfigService) private configService: IConfigService,
+		@inject(TYPES.UserModel) private userModel: UserModel,
+	) {}
 
 	async createUser({ email, name, password }: UserRegisterDto): Promise<IUser | null> {
 

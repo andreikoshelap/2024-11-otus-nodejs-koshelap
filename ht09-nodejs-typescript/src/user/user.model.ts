@@ -2,6 +2,7 @@ import mongoose, {Schema, Model, Types} from 'mongoose';
 import {IUser} from './interface/user.entity.interface';
 import {IUserModel} from './interface/user.model.interface';
 import { v4 as uuidv4 } from 'uuid';
+import {injectable} from "inversify";
 
 const userSchema = new Schema<IUser>(
     {
@@ -16,6 +17,7 @@ const userSchema = new Schema<IUser>(
     },
 );
 
+@injectable()
 export class UserModel implements IUserModel {
     private model: Model<IUser>;
 
