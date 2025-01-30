@@ -1,6 +1,15 @@
 version: "3.9"
 
 services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    volumes:
+      - db:/data/db
+    ports:
+      - 27018:27017
+
   reverse-proxy:
     image: nginx:alpine
     container_name: reverse-proxy

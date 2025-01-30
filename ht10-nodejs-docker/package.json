@@ -1,8 +1,8 @@
 {
-	"name": "ht07-nodejs-authentication",
-	"version": "1.7.0",
-	"description": "Homework number seven",
-	"main": "app.js",
+	"name": "ht10-nodejs-docker",
+	"version": "1.10.0",
+	"description": "Homework number ten",
+	"main": "main.js",
 	"scripts": {
 		"start": "node ./dist/src/main.js",
 		"dev": "nodemon",
@@ -11,7 +11,8 @@
 		"lint:fix": "eslint ./src/** --fix",
 		"build": "tsc",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start-gendoc": "node ./swagger.js"
+		"start-gendoc": "node ./swagger.js",
+		"deploy": "echo 'Deploying application...'"
 	},
 	"keywords": [],
 	"author": "Andrei Koshelap",
