@@ -1,7 +1,7 @@
 import {Prop, SchemaFactory, Schema} from "@nestjs/mongoose";
 
 @Schema()
-export class ContentModel {
+export class Content {
     @Prop({ required: true })
     title: string;
     @Prop({ required: true })
@@ -10,5 +10,5 @@ export class ContentModel {
     published: boolean;
 }
 
-export type ContentDocument = ContentModel & Document;
-export const ContentSchema = SchemaFactory.createForClass(ContentModel);
+export type ContentDocument = Content & Document;
+export const ContentSchema = SchemaFactory.createForClass(Content);
