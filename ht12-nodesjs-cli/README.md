@@ -1,11 +1,11 @@
-# ht10-nodejs-docker
+# ht12-nodejs-cli
 
 ---
 
 ## Features
 
 -   **Student testing application number 10**
--   **Purpose**: Create Docker file of application
+-   **Purpose**: Create CLI application
 -   **Result**: 
 
 -   **Modern Backend Stack**:
@@ -37,15 +37,6 @@ leave comments on the course, lessons and add comments; users can rate the cours
 contain a REST API for managing application resources
 use a database to store information about tasks, users
 
-## Application workflow diagram
-![draw.io](./images/diagram.png)
-
-## Application entity diagram
-![draw.io](./images/entity_relation.drawio.png)
-
-## Quick Start
-
-### Prerequisites
 
 
 ```
@@ -84,24 +75,3 @@ as response we have got
 encoded part has 3 part divided by point
 we can check those part on jwp.io site
 ```
- 
-**Used MongoDB Compass(mongosh)**
-
-```
-db.users.find()
-
-
-{
-  _id: ObjectId('67582bfaecf06103c78dfbb7'),
-  email: 'evgeny@idva.ee',
-  password: '$2a$10$iTjbwElOCtWjshX7BazWtOtWCQRt9sOpZ4PsnWQueHJ4th71iwYea',
-  name: 'EPups',
-  createdAt: 2024-12-10T11:54:34.110Z,
-  updatedAt: 2024-12-10T11:54:34.110Z,
-  __v: 0
-}
-```
-**Check Rest API endpoints with swagger** 
-
-use http://localhost:8000/api-docs/
-

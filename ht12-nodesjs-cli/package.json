@@ -1,0 +1,53 @@
+{
+  "name": "ht12-nodejs-cli",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "andreikoshelap@gmail.com",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "copy-files": "cpy src/data/airports.dat build/data/ && cpy src/data/routes.dat build/data/",
+    "build": "tsc && yarn copy-files",
+    "build:clean": "rm -rf ./build && yarn build",
+    "dev": "TS_NODE_PROJECT='./tsconfig.json' ts-node-dev --respawn ./src src/index.ts",
+    "test": "jest",
+    "start": "yarn build && node build/index.js",
+    "start:dev": "tsc && node build/index.js"
+  },
+  "dependencies": {
+    "@oclif/core": "^4.2.6",
+    "@oclif/plugin-help": "^6.2.24",
+    "@oclif/plugin-plugins": "^5.4.30",
+    "@types/express": "^5.0.0",
+    "csv-parse": "^5.6.0",
+    "express": "^4.21.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.9"
+  },
+  "resolutions": {
+    "**/debug": "^4"
+  },
+  "devDependencies": {
+    "@oclif/prettier-config": "^0.2.1",
+    "@oclif/test": "^4.1.9",
+    "@types/jest": "^29.5.14",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.13.1",
+    "@types/supertest": "^6.0.2",
+    "eslint-config-oclif": "^6.0.5",
+    "eslint-config-oclif-typescript": "^3.1.14",
+    "eslint-config-prettier": "^10.0.1",
+    "jest": "^29.7.0",
+    "jest-extended": "^4.0.2",
+    "oclif": "^4.17.25",
+    "shx": "^0.3.4",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.3"
+  }
+}
