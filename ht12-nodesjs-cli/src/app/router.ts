@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as morgan from 'morgan';
 
 import {notNil, flatten, getRoutes} from '../util';
-import {Airport, Hop, loadAirportData, loadRouteData, Result, Route} from '../data';
+import {Airport, Hop, loadAirportData, loadRouteData, Result, Route} from '../data/data-parser';
 
 export async function createApp() {
   const app = express();

@@ -1,4 +1,4 @@
-import {Airport, Hop, Leg, Result, Route} from "../data";
+import {Airport, Hop, Leg, Result, Route} from "../data/data-parser";
 
 const maxLegs = 4;
 

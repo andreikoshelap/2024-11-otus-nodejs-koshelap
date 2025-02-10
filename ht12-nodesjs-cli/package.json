@@ -9,13 +9,13 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "copy-files": "cpy src/data/airports.dat build/data/ && cpy src/data/routes.dat build/data/",
+    "copy-files": "cpy src/data/airports.dat build/data && cpy src/data/routes.dat build/data",
     "build": "tsc && yarn copy-files",
     "build:clean": "rm -rf ./build && yarn build",
-    "dev": "TS_NODE_PROJECT='./tsconfig.json' ts-node-dev --respawn ./src src/index.ts",
+    "dev": "TS_NODE_PROJECT='./tsconfig.json' ts-node-dev --respawn ./src src/main.ts",
     "test": "jest",
-    "start": "yarn build && node build/index.js",
-    "start:dev": "tsc && node build/index.js"
+    "start": "yarn build && node build/main.js",
+    "start:dev": "tsc && node build/main.js"
   },
   "dependencies": {
     "@oclif/core": "^4.2.6",
