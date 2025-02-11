@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as morgan from 'morgan';
 
-import {notNil, flatten, getRoutes} from '../util';
+import {notNil, flatten, getRoutesAsync} from '../util';
 import {Airport, Hop, loadAirportData, loadRouteData, Result, Route} from '../data/data-parser';
 
 export async function createApp() {
@@ -15,7 +15,7 @@ export async function createApp() {
     ].filter(notNil)))
   );
 
-  const routs:Route[] =  await loadRouteData();
+  const routes:Route[] =  await loadRouteData();
 
   app.use(morgan('tiny'));
 
@@ -40,27 +40,25 @@ export async function createApp() {
     if (source === undefined || destination === undefined) {
       return res.status(400).send('Must provide source and destination airports');
     }
-
     const sourceAirport = airportsByCode.get(source.toLowerCase());
     const destinationAirport = airportsByCode.get(destination.toLowerCase());
     if (sourceAirport === undefined || destinationAirport === undefined) {
       return res.status(404).send('No such airport, please provide a valid IATA/ICAO codes');
     }
 
-    const data = getRoutes(routs, source, destination, 1, new Map(), []);
-    const legs:Hop[] = [...data.values()];
-    console.log(legs);
-    const distances:number[] = legs.map(h => h.totalDistance);
-
-    const distance = Math.min(...distances);
-    const hops:string[][] = legs.map(l => l.hops);
-
-    return res.status(200).send({
-      source,
-      destination,
-      distance,
-      hops,
+    getRoutesAsync(routes, source, destination, 1, new Map(), []).then((hopes) => {
+      const distance: number = hopes.map(hope=> hope.totalDistance).reduce((min, current) =>{
+        return current < min ? current : min;
+      });
+      const hops: string[][] = hopes.map(hope=>hope.hops);
+      return res.status(200).send({
+        source,
+        destination,
+        distance,
+        hops,
+      });
     });
+
   });
 
   return app;
