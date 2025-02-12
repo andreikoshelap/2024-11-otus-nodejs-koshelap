@@ -2,7 +2,7 @@ import * as parse from 'csv-parse';
 import { readFile } from 'fs';
 import { resolve as resolvePath } from 'path';
 
-import { notNil, haversine } from '../util';
+import { notNil, haversine } from '../util/calculator';
 
 export interface Airport {
   id: string;

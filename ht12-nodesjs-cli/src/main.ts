@@ -1,4 +1,4 @@
-import { createApp } from './app/router';
+import { createApp } from './app/end-points';
 
 const PORT = process.env.PORT || 3000;
 createApp()

@@ -1,4 +1,4 @@
-import {Airport, Hop, Leg, Result, Route} from "../data/data-parser";
+import {Hop, Leg, Route} from "../data/data-parser";
 
 const maxLegs = 3;
 
@@ -31,69 +31,57 @@ export function haversine(lat1: number, lon1: number, lat2: number, lon2: number
 }
 
 
-export async function getRoutesAsync(
-    routes: Route[],
-    source: string,
-    destination: string,
-    leg: number,
+export function getRoutes(
+    routes: Route[], source: string,
+    destination: string, leg: number,
     result: Map<string, Hop>,
-    legs: Leg[]
-): Promise<Hop[] | null> {
+    legs: Leg[]) {
+
     if (leg > maxLegs) {
         return null;
     }
 
-    const newRoutes: Route[] = routes.filter(route => route.source.iata === source);
-
+    const newRoutes: Route[] = routes.filter((route) => route.source.iata === source);
     for (const route of newRoutes) {
+
         if (route.destination.iata === destination) {
             let totalDistance = 0;
-            legs[leg] = await getLegAsync(leg, source, route.destination.iata, route.distance);
-            if (!legs[leg]) {
+            legs[leg] = getLeg(leg, source, route.destination.iata, route.distance);
+            if (legs[leg] == null) {
                 return null;
             }
-
-            const legArray: string[] = [];
+            const legObject: string[] = [];
             let legIndex = legs[1].start;
-            legArray.push(legs[1].start);
-
+            legObject.push(legs[1].start);
             for (let i = 1; i < leg; i++) {
-                legArray.push(legs[i].finish);
+                legObject.push(legs[i].finish);
                 legIndex = legIndex + legs[i].finish;
-                totalDistance += legs[i].distance;
+                totalDistance = totalDistance + legs[i].distance;
             }
-
-            legArray.push(legs[leg].finish);
+            legObject.push(legs[leg].finish);
             legIndex = legIndex + legs[leg].finish;
-            totalDistance += legs[leg].distance;
-
-            const hop = new Hop(legIndex, legArray, totalDistance);
+            totalDistance = totalDistance + legs[leg].distance;
+            const hop = new Hop(legIndex, legObject, totalDistance);
             result.set(legIndex, hop);
-            return [...result.values()];
+            return result;
         } else {
             if (leg < maxLegs) {
-                legs[leg] = await getLegAsync(leg, source, route.destination.iata, route.distance);
-                if (!legs[leg]) {
+                legs[leg] = getLeg(leg, source, route.destination.iata, route.distance);
+                if (legs[leg] == null) {
                     return null;
                 }
             }
-            const recursiveResult = await getRoutesAsync(routes, route.destination.iata, destination, leg + 1, result, legs);
-            if (recursiveResult !== null) {
-                return recursiveResult;
-            }
+            getRoutes(routes, route.destination.iata, destination, leg + 1, result, legs);
         }
     }
-    return [...result.values()];
+    return result;
 }
 
-function getLeg(leg: number, sourceIata:string, destinationIata: string, distance: number) {
-    if(sourceIata == null || destinationIata == null) {
+function getLeg(leg: number, sourceIata: string, destinationIata: string, distance: number) {
+    if (sourceIata == null || destinationIata == null) {
         return null;
     }
 
     return new Leg(leg, sourceIata, destinationIata, distance);
 }
 
-function getLegAsync(leg: number, source: string, destination: string, distance: number): Promise<Leg | null> {
-    return Promise.resolve(getLeg(leg, source, destination, distance));
-}

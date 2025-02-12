@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as morgan from 'morgan';
 
-import {notNil, flatten, getRoutesAsync} from '../util';
+import {notNil, flatten, getRoutes} from '../util/calculator';
 import {Airport, Hop, loadAirportData, loadRouteData, Result, Route} from '../data/data-parser';
 
 export async function createApp() {
@@ -46,11 +46,12 @@ export async function createApp() {
       return res.status(404).send('No such airport, please provide a valid IATA/ICAO codes');
     }
 
-    getRoutesAsync(routes, source, destination, 1, new Map(), []).then((hopes) => {
-      const distance: number = hopes.map(hope=> hope.totalDistance).reduce((min, current) =>{
+    const data = getRoutes(routes, source, destination, 1, new Map(), []);
+      const distance: number = [...data.values()].map(hope=> hope.totalDistance)
+          .reduce((min, current) =>{
         return current < min ? current : min;
       });
-      const hops: string[][] = hopes.map(hope=>hope.hops);
+      const hops: string[][] = [...data.values()].map(hope=>hope.hops);
       return res.status(200).send({
         source,
         destination,
@@ -58,8 +59,6 @@ export async function createApp() {
         hops,
       });
     });
-
-  });
 
   return app;
 }
