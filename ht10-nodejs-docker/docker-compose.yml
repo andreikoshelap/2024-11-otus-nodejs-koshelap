@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    volumes:
+      - db:/data/db
+    ports:
+      - 27018:27017
+
+  reverse-proxy:
+    image: nginx:alpine
+    container_name: reverse-proxy
+    hostname: reverse-proxy
+    tty: true
+    stdin_open: true
+    restart: "unless-stopped"
+
+    ports:
+      - 8080:80
+
+  api:
+    build: .
+    ports:
+      - 8000:4000

@@ -5,14 +5,15 @@
 ## Features
 
 -   **Student testing application number 10**
--   **Purpose**: Create Docker file of application
--   **Result**: 
+-   **Purpose**: Create Docker file of application according proposed configuration
+-   **Result**: Docker file has been created and tested
 
 -   **Modern Backend Stack**:
     -   **Express** server wrapper application
     -   **MongoDB** Database framework
     -   **typeScript** javaScript typed builder
     -   **Swagger** providing REST API endpoints
+    -   **Docker** add docker file for containerization of application
 
 ---
 
@@ -105,3 +106,6 @@ db.users.find()
 
 use http://localhost:8000/api-docs/
 
+**Check Docker file**
+
+use docker run  
