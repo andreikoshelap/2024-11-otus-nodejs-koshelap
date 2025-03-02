@@ -15,7 +15,8 @@
     "dev": "TS_NODE_PROJECT='./tsconfig.json' ts-node-dev --respawn ./src src/main.ts",
     "test": "jest",
     "start": "yarn build && node build/main.js",
-    "start:dev": "tsc && node build/main.js"
+    "start:dev": "tsc && node build/main.js",
+    "build:cli": "shx rm -rf dist && tsc -b"
   },
   "dependencies": {
     "@oclif/core": "^4.2.6",
@@ -50,5 +51,15 @@
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.3"
+  },
+  "bin": {
+    "ht12-nodesjs-cli": "./bin/run.js",
+    "ht12": "./bin/run.js"
+  },
+  "oclif": {
+    "bin": "ht12-nodesjs-cli",
+    "commands": "./dist/commands",
+    "dirname": "ht12-nodesjs-cli",
+    "topicSeparator": " "
   }
 }
