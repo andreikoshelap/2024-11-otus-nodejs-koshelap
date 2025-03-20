@@ -11,8 +11,24 @@ import swaggerSpec from './annotation/swaggerConfig';
 import {CourseController} from "./course/course.controller";
 import {IConfigService} from "./config/interface/config.service.interface";
 import {AuthMiddleware} from "./common/auth.middleware";
+import { Module } from '@nestjs/common';
+import {TypeOrmModule} from "@nestjs/typeorm";
+import {connection} from "./database/connection";
+import {User} from "./database/Entities/User.entity";
+import {UserService} from "./user/user.service";
 
-export class App {
+let UsersController;
+
+@Module({
+	imports: [
+		TypeOrmModule.forRoot(connection),
+		TypeOrmModule.forFeature([ User]),
+	],
+
+	controllers: [ UserController],
+	providers: [ UserService],
+})
+export class AppModule {
 	app: Express;
 	server: Server;
 	port: number;
@@ -29,7 +45,7 @@ export class App {
 		configService: IConfigService,
 	) {
 		// const db = new Database('mongodb://localhost:27017/otus');
-		db.connect();
+		// db.connect();
 		this.app = express();
 		this.port = 8000;
 		this.logger = logger;

@@ -1,4 +1,4 @@
-import {App} from './app';
+import {AppModule} from './app.module';
 import {ExeptionFilter} from './error/exeption.filter';
 import {LogMessage} from './logger/logger.interface';
 import {LoggerService} from './logger/logger.service';
@@ -15,7 +15,7 @@ async function bootstrap(): Promise<void> {
     const userService = new UserService(new UserModel());
     const courseService = new CourseService(new CourseModel());
     const configService = new ConfigService(logger);
-    const app = new App(logger, new UserController(logger, userService, configService),
+    const app = new AppModule(logger, new UserController(logger, userService, configService),
         new CourseController(logger, courseService),
         new ExeptionFilter(logger),
         configService);
