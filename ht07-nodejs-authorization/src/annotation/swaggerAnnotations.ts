@@ -47,7 +47,7 @@
  * /users/login:
  *   post:
  *     summary: Login with email
- *     description: This endpoint login existing user into the system.
+ *     description: This endpoint logs in an existing user into the system.
  *     tags:
  *       - Users
  *     requestBody:
@@ -67,7 +67,7 @@
  *                 example: password123
  *     responses:
  *       201:
- *         description: User logged successfully
+ *         description: User logged in successfully
  *         content:
  *           application/json:
  *             schema:
@@ -75,29 +75,28 @@
  *               properties:
  *                 id:
  *                   type: string
- *                   description: ID of the created user
+ *                   description: ID of the logged in user
  *                   example: 123456
  *                 name:
  *                   type: string
- *                   description: Name of the created user
+ *                   description: Name of the logged in user
  *                   example: John Doe
  *       400:
  *         description: Bad request
  *
- *
  * /users/info:
  *   get:
- *     summary: information about existing user by email
- *     description: This endpoint checking existing user in the system.
+ *     summary: Information about an existing user by email
+ *     description: This endpoint checks an existing user in the system.
  *     tags:
- *         - Users
- *       parameters:
- *         - in: header
- *           name: Authorization
- *           required: true
- *           schema:
- *             type: string
- *           description: Bearer token for authentication
+ *       - Users
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Bearer token for authentication
  *     responses:
  *       200:
  *         description: User information
@@ -108,11 +107,11 @@
  *               properties:
  *                 id:
  *                   type: string
- *                   description: ID of the created user
+ *                   description: ID of the user
  *                   example: 123456
  *                 email:
  *                   type: string
- *                   description: Email of existing user
+ *                   description: Email of the user
  *                   example: john.doe@example.com
  *       401:
  *         description: Unauthorized
@@ -138,7 +137,7 @@
  *                 example: Node.js
  *               teacher:
  *                 type: string
- *                 description: Name of user who organize this course
+ *                 description: Name of the user who organizes this course
  *                 example: John Doe
  *     responses:
  *       201:
@@ -160,9 +159,9 @@
  *         description: Bad request
  *
  * /courses/update:
- *    post:
- *     summary: Update of course
- *     description: This endpoint login existing course in the system.
+ *   post:
+ *     summary: Update a course
+ *     description: This endpoint updates an existing course in the system.
  *     tags:
  *       - Courses
  *     requestBody:
@@ -174,15 +173,15 @@
  *             properties:
  *               name:
  *                 type: string
- *                 description: Name of the course
- *                 example: Node.js
+ *                 description: Updated name of the course
+ *                 example: Node.js Advanced
  *               teacher:
  *                 type: string
- *                 description: Name of user who organize this course
+ *                 description: Updated name of the user who organizes this course
  *                 example: John Doe
- *    responses:
- *       201:
- *         description: Course created successfully
+ *     responses:
+ *       200:
+ *         description: Course updated successfully
  *         content:
  *           application/json:
  *             schema:
@@ -190,12 +189,12 @@
  *               properties:
  *                 id:
  *                   type: string
- *                   description: ID of the created course
+ *                   description: ID of the updated course
  *                   example: 123456
  *                 name:
  *                   type: string
- *                   description: Name of the created course
- *                   example: Node.js
+ *                   description: Updated name of the course
+ *                   example: Node.js Advanced
  *       400:
  *         description: Bad request
  */
