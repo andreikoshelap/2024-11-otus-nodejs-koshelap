@@ -3,7 +3,7 @@ services:
   # Angular Frontend
   frontend:
     build:
-      dockerfile: api/Dockerfile
+      dockerfile: Dockerfile
       context: ./ui
       target: development
     command: npm run start
@@ -18,7 +18,7 @@ services:
   # NestJS Todo Api
   api:
     build:
-      dockerfile: api/Dockerfile
+      dockerfile: Dockerfile
       context: ./api
       # Only build development stage from our dockerfile
       target: development
